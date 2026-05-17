@@ -49,6 +49,15 @@
   }
 }
 
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@utility animate-fade-in {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
 @keyframes rainbow-bg {
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
@@ -61,7 +70,7 @@
 }
 
 @utility text-rainbow {
-  background: linear-gradient(124deg, #ff718d, #f5d100, #4bd64b, #2aa0f5, #b854b8);
+  background: linear-gradient(124deg, var(--color-rainbow-1), var(--color-rainbow-2), var(--color-rainbow-3), var(--color-rainbow-4), var(--color-rainbow-5));
   background-size: 300% 300%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;

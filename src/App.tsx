@@ -6,7 +6,7 @@
 import { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
-import { Heart, Sparkles, ShieldCheck, ArrowRight, Instagram, Mail, MapPin, X, ChevronLeft, ChevronRight, Moon, Sun } from 'lucide-react';
+import { Heart, Sparkles, ShieldCheck, ArrowRight, Instagram, Mail, MapPin, X, ChevronLeft, ChevronRight, Moon, Sun, Menu } from 'lucide-react';
 
 import heroImg from './assets/images/Ani1.jpeg';
 import ani2 from './assets/images/Ani2.jpeg';
@@ -32,30 +32,34 @@ import vif18 from './assets/images/VIF18.jpeg';
 import vif19 from './assets/images/VIF19.jpeg';
 import vifLogo from './assets/images/vif-logo1.png';
 
+import { LanguageProvider, useLanguage, T } from './i18n';
+
 export default function App() {
   return (
-    <BrowserRouter>
-      <div className="min-h-screen bg-boho-cream text-boho-dark font-sans selection:bg-boho-rose selection:text-boho-dark flex flex-col">
-        <Navbar />
-        <main className="flex-grow">
-          <Routes>
-            <Route path="/" element={
-              <>
-                <Hero />
-                <Atmosphere />
-                <GallerySnippet />
-              </>
-            } />
-            <Route path="/about" element={<About />} />
-            <Route path="/gallery" element={<Gallery />} />
-            <Route path="/impressum" element={<Impressum />} />
-            <Route path="/datenschutz" element={<Datenschutz />} />
-          </Routes>
-        </main>
-        <Footer />
-        <CookieBanner />
-      </div>
-    </BrowserRouter>
+    <LanguageProvider>
+      <BrowserRouter>
+        <div className="min-h-screen bg-boho-cream text-boho-dark font-sans selection:bg-boho-rose selection:text-boho-dark flex flex-col">
+          <Navbar />
+          <main className="flex-grow">
+            <Routes>
+              <Route path="/" element={
+                <>
+                  <Hero />
+                  <Atmosphere />
+                  <GallerySnippet />
+                </>
+              } />
+              <Route path="/about" element={<About />} />
+              <Route path="/gallery" element={<Gallery />} />
+              <Route path="/impressum" element={<Impressum />} />
+              <Route path="/datenschutz" element={<Datenschutz />} />
+            </Routes>
+          </main>
+          <Footer />
+          <CookieBanner />
+        </div>
+      </BrowserRouter>
+    </LanguageProvider>
   );
 }
 
@@ -89,21 +93,23 @@ function CookieBanner() {
     >
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
         <div className="text-sm font-light text-boho-dark/80 max-w-3xl">
-          Wir verwenden Cookies, um dir das beste Erlebnis auf unserer Website zu bieten. Einige von ihnen sind essenziell, während andere uns helfen, diese Website zu verbessern. 
-          Weitere Informationen findest du in unserer <Link to="/datenschutz" className="underline hover:text-boho-gold">Datenschutzerklärung</Link> und im <Link to="/impressum" className="underline hover:text-boho-gold">Impressum</Link>.
+          <T i18nKey="cookie.text" />
+          <Link to="/datenschutz" className="underline hover:text-boho-gold"><T i18nKey="cookie.privacy" /></Link>
+          <T i18nKey="cookie.and" />
+          <Link to="/impressum" className="underline hover:text-boho-gold"><T i18nKey="cookie.imprint" /></Link>.
         </div>
         <div className="flex items-center space-x-4 w-full md:w-auto">
           <button 
             onClick={handleReject}
             className="flex-1 md:flex-none px-6 py-3 border border-boho-dark text-boho-dark rounded-sm hover:bg-boho-dark hover:text-boho-cream transition-colors duration-300 tracking-wide font-medium text-sm whitespace-nowrap"
           >
-            Alle ablehnen
+            <T i18nKey="cookie.reject" />
           </button>
           <button 
             onClick={handleAccept}
             className="flex-1 md:flex-none px-6 py-3 border border-boho-dark text-boho-dark rounded-sm hover:bg-boho-dark hover:text-boho-cream transition-colors duration-300 tracking-wide font-medium text-sm whitespace-nowrap"
           >
-            Alle akzeptieren
+            <T i18nKey="cookie.accept" />
           </button>
         </div>
       </div>
@@ -188,13 +194,48 @@ function DarkModeToggle() {
   );
 }
 
+function LanguageToggle() {
+  const { lang, toggleLang } = useLanguage();
+  const [isHovered, setIsHovered] = useState(false);
+
+  const displayLang = isHovered ? (lang === 'de' ? 'EN' : 'DE') : (lang === 'de' ? 'DE' : 'EN');
+
+  return (
+    <button 
+      onClick={toggleLang}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      onFocus={() => setIsHovered(true)}
+      onBlur={() => setIsHovered(false)}
+      className="text-boho-dark text-xs font-semibold tracking-wider hover:text-boho-gold transition-colors duration-300 border border-boho-dark/20 hover:border-boho-gold rounded-full w-8 h-8 flex items-center justify-center relative overflow-hidden"
+      aria-label="Toggle Language"
+    >
+      <AnimatePresence mode="wait" initial={false}>
+        <motion.span
+          key={displayLang}
+          initial={{ opacity: 0, y: isHovered ? 10 : -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: isHovered ? -10 : 10 }}
+          transition={{ duration: 0.2 }}
+          className="absolute"
+        >
+          {displayLang}
+        </motion.span>
+      </AnimatePresence>
+    </button>
+  );
+}
+
 function Navbar() {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { t } = useLanguage();
+
   return (
     <nav className="sticky top-0 z-50 bg-boho-cream/90 backdrop-blur-md border-b border-boho-beige py-4 px-6 md:px-12">
-      <div className="max-w-7xl mx-auto flex items-center justify-between">
+      <div className="max-w-7xl mx-auto flex items-center justify-between relative">
         {/* Logo & Social */}
-        <div className="flex items-center space-x-4 md:space-x-6">
-          <Link to="/" className="group">
+        <div className="flex items-center space-x-4 md:space-x-4">
+          <Link to="/" className="group" onClick={() => setIsMobileMenuOpen(false)}>
             <img src={vifLogo} alt="Verliebt in Farbe - Fineline Tattoo Studio Logo" width="64" height="64" className="h-14 md:h-16 w-auto object-contain rounded-full shadow-md dark:bg-white p-[2px] group-hover:scale-110 group-hover:rotate-[5deg] transition-all duration-300 ease-out" />
           </Link>
           <a 
@@ -206,23 +247,44 @@ function Navbar() {
           >
             <Instagram className="w-4 h-4" />
           </a>
+          <LanguageToggle />
           <DarkModeToggle />
         </div>
 
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center space-x-8 text-sm uppercase tracking-widest font-light text-boho-dark/80">
-          <Link to="/" className="hover:text-boho-gold transition-colors">Home</Link>
-          <Link to="/about" className="hover:text-boho-gold transition-colors">Über mich</Link>
-          <Link to="/gallery" className="hover:text-boho-gold transition-colors">Galerie</Link>
-          <a href="#" className="hover:text-boho-gold transition-colors">Termin buchen</a>
+          <Link to="/" className="hover:text-boho-gold transition-colors"><T i18nKey="nav.home" /></Link>
+          <Link to="/about" className="hover:text-boho-gold transition-colors"><T i18nKey="nav.about" /></Link>
+          <Link to="/gallery" className="hover:text-boho-gold transition-colors"><T i18nKey="nav.gallery" /></Link>
+          <a href="#" className="hover:text-boho-gold transition-colors"><T i18nKey="nav.booking" /></a>
         </div>
 
-        {/* Mobile Menu Button (Placeholder) */}
-        <button className="md:hidden p-2 text-boho-dark hover:text-boho-gold transition-colors">
-          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 6h16M4 12h16M4 18h16" />
-          </svg>
+        {/* Mobile Menu Button */}
+        <button 
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          className="md:hidden p-2 text-boho-dark hover:text-boho-gold transition-colors"
+          aria-label="Menü öffnen/schließen"
+        >
+          {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
         </button>
+
+        {/* Mobile Navigation Dropdown */}
+        <AnimatePresence>
+          {isMobileMenuOpen && (
+            <motion.div 
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.2 }}
+              className="absolute top-full left-0 right-0 mt-4 bg-boho-cream border border-boho-beige shadow-xl rounded-xl p-6 flex flex-col space-y-6 md:hidden z-50 text-center"
+            >
+              <Link to="/" onClick={() => setIsMobileMenuOpen(false)} className="text-boho-dark hover:text-boho-gold transition-colors text-sm uppercase tracking-widest font-light"><T i18nKey="nav.home" /></Link>
+              <Link to="/about" onClick={() => setIsMobileMenuOpen(false)} className="text-boho-dark hover:text-boho-gold transition-colors text-sm uppercase tracking-widest font-light"><T i18nKey="nav.about" /></Link>
+              <Link to="/gallery" onClick={() => setIsMobileMenuOpen(false)} className="text-boho-dark hover:text-boho-gold transition-colors text-sm uppercase tracking-widest font-light"><T i18nKey="nav.gallery" /></Link>
+              <a href="#" onClick={() => setIsMobileMenuOpen(false)} className="text-boho-dark hover:text-boho-gold transition-colors text-sm uppercase tracking-widest font-light"><T i18nKey="nav.booking" /></a>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </nav>
   );
@@ -270,27 +332,27 @@ function About() {
         
         <div className="w-full md:w-1/2 max-w-xl mx-auto md:mx-0">
           <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl leading-[1.3] mb-6 text-boho-dark">
-            Schön, dass <br/><span className="italic text-rainbow">du da bist.</span>
+            <T i18nKey="about.title.1" /> <br/><span className="italic text-rainbow"><T i18nKey="about.title.2" /></span>
           </h2>
           
           <div className="space-y-6 text-boho-dark/80 font-light leading-relaxed">
             <p>
-              Hey, ich bin Ani! Das Gesicht und die Seele hinter "Verliebt in Farbe". Seit über 15 Jahren ist das Tätowieren für mich nicht nur ein Handwerk, sondern meine absolute Herzensangelegenheit und größte Leidenschaft.
+              <T i18nKey="about.p1" />
             </p>
             <p>
-              Mein Fokus liegt auf zarten Fineline-Arbeiten und detailverliebten Mandalas, die sanft deine natürlichen Kurven betonen. Es ist mir besonders wichtig, Kunstwerke zu erschaffen, die weiblich, fein und absolut einzigartig auf dich abgestimmt sind.
+              <T i18nKey="about.p2" />
             </p>
             <p>
-              In meinem Studio in Mohlsdorf habe ich einen echten "Safe Space" geschaffen – einen Raum, in dem du dich vollkommen fallen lassen darfst. Mir ist ein liebevoller, rücksichtsvoller und einfühlsamer Umgang extrem wichtig. Egal, ob es dein allererstes Tattoo ist oder du schon lange sammelst: Bei mir kommst du an, darfst entspannen und dich einfach wohlfühlen. Niemand wird gehetzt, und wir nehmen uns immer die Zeit, die du brauchst, damit du dich absolut sicher und verstanden fühlst.
+              <T i18nKey="about.p3" />
             </p>
             <p className="font-medium text-boho-dark pt-4">
-              Ich freue mich von Herzen darauf, deine Geschichte unter die Haut zu bringen!
+              <T i18nKey="about.p4" />
             </p>
           </div>
           
           <div className="mt-10">
-            <Link to="/" className="inline-flex items-center px-8 py-4 bg-boho-dark text-white rounded-sm hover:bg-boho-gold transition-colors duration-300 tracking-wide font-light group">
-              Zurück zur Startseite
+            <Link to="/" className="inline-flex items-center px-8 py-4 bg-boho-dark text-boho-cream rounded-sm hover:bg-boho-gold hover:text-white transition-colors duration-300 tracking-wide font-light group">
+              <T i18nKey="about.back" />
             </Link>
           </div>
         </div>
@@ -300,13 +362,13 @@ function About() {
       <div className="max-w-5xl mx-auto px-6 md:px-12 mt-24">
         <div className="bg-white/60 border border-boho-beige p-8 md:p-12 rounded-3xl flex flex-col md:flex-row gap-8 items-center text-center md:text-left justify-between shadow-sm">
           <div>
-            <h3 className="font-serif text-2xl mb-2 text-boho-dark">Lass uns kreativ werden</h3>
+            <h3 className="font-serif text-2xl mb-2 text-boho-dark"><T i18nKey="about.box.title" /></h3>
             <p className="text-boho-dark/70 font-light text-sm md:text-base max-w-lg">
-              Dein Körper ist einzigartig und genau so sollte auch dein Tattoo sein. Falls du Fragen oder schon eine grobe Idee hast, schreib mir einfach!
+              <T i18nKey="about.box.desc" />
             </p>
           </div>
           <button className="whitespace-nowrap px-6 py-3 bg-boho-gold text-[#2d2d2d] rounded-sm hover:bg-boho-dark hover:text-boho-cream transition-colors tracking-widest text-sm uppercase">
-            Termin anfragen
+            <T i18nKey="about.box.btn" />
           </button>
         </div>
       </div>
@@ -331,21 +393,21 @@ function Hero() {
         >
           <div className="inline-flex items-center space-x-2 px-3 py-1 mb-6 rounded-full border border-boho-gold/30 bg-boho-cream text-xs uppercase tracking-widest text-boho-dark/70">
             <Sparkles className="w-3 h-3 text-boho-gold" />
-            <span>Fineline & Mandalas</span>
+            <span><T i18nKey="hero.badge" /></span>
           </div>
-          <h1 className="font-serif text-5xl md:text-6xl lg:text-7xl leading-[1.3] mb-6 text-boho-dark">
-            Sanfte Kunst,<br /> <span className="italic text-rainbow">die unter die Haut geht.</span>
+          <h1 className="font-serif text-5xl md:text-6xl lg:text-7xl leading-[1.3] mb-6 text-rainbow">
+            <T i18nKey="hero.title.1" /><br /> <span className="italic"><T i18nKey="hero.title.2" /></span>
           </h1>
           <p className="text-lg md:text-xl font-light text-boho-dark/80 mb-10 leading-relaxed">
-            Feine Linien, florale Mandalas und ein liebevoll gestalteter Raum, in dem du dich rundum wohlfühlen kannst. Dein Körper, deine Geschichte, verewigt in zarter Farbe.
+            <T i18nKey="hero.desc" />
           </p>
           <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-4 sm:space-y-0 sm:space-x-6">
             <button className="px-8 py-4 bg-boho-dark text-boho-cream rounded-sm hover:bg-boho-gold hover:text-[#2d2d2d] transition-colors duration-300 tracking-wide font-light flex items-center group">
-              Jetzt Termin anfragen
+              <T i18nKey="hero.btn" />
               <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
             </button>
             <Link to="/gallery" className="text-sm uppercase tracking-widest text-boho-dark/60 hover:text-boho-dark transition-colors border-b border-transparent hover:border-boho-dark pb-1">
-              Galerie ansehen
+              <T i18nKey="hero.gallery" />
             </Link>
           </div>
         </motion.div>
@@ -376,18 +438,18 @@ function Atmosphere() {
   const values = [
     {
       icon: <Heart className="w-6 h-6 text-boho-gold" />,
-      title: "Herzlich & Weiblich",
-      description: "Ein Safe Space, in dem du genau so sein darfst, wie du bist. Behutsame Beratung auf Augenhöhe."
+      title: <T i18nKey="values.1.title" />,
+      description: <T i18nKey="values.1.desc" />
     },
     {
       icon: <Sparkles className="w-6 h-6 text-boho-gold" />,
-      title: "Präzision & Kunst",
-      description: "Hauchzarte Linien und kunstvolle Mandalas. Jedes Design wird individuell und einzigartig für dich entworfen."
+      title: <T i18nKey="values.2.title" />,
+      description: <T i18nKey="values.2.desc" />
     },
     {
       icon: <ShieldCheck className="w-6 h-6 text-boho-gold" />,
-      title: "Höchste Hygiene",
-      description: "Sicherheit und Sauberkeit stehen an erster Stelle. Modernes Equipment und sterile Arbeitsweise."
+      title: <T i18nKey="values.3.title" />,
+      description: <T i18nKey="values.3.desc" />
     }
   ];
 
@@ -395,9 +457,9 @@ function Atmosphere() {
     <section className="py-24 bg-boho-cream relative">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         <div className="text-center max-w-2xl mx-auto mb-16">
-          <h2 className="font-serif text-3xl md:text-4xl mb-4">Dein Safespace für Tattoos</h2>
+          <h2 className="font-serif text-3xl md:text-4xl mb-4"><T i18nKey="values.main.title" /></h2>
           <p className="text-boho-dark/70 font-light">
-            Mir ist wichtig, dass du nicht nur mit einem wunderschönen Tattoo nach Hause gehst, sondern auch mit einem guten Gefühl.
+            <T i18nKey="values.main.desc" />
           </p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10 lg:gap-16">
@@ -460,10 +522,10 @@ function GallerySnippet() {
           <div className="max-w-xl">
             <h2 className="font-serif text-4xl mb-4 flex items-center gap-3">
               <Instagram className="w-8 h-8 text-boho-dark" />
-              Meine Arbeiten
+              <T i18nKey="works.title" />
             </h2>
             <p className="text-boho-dark/70 font-light">
-              Lass dich von meinen neuesten Fineline- & Mandala-Projekten inspirieren. Jedes Design ist einzigartig und wird individuell angefertigt. Mehr Entwürfe und fertige Arbeiten findest du auf <a href="https://www.instagram.com/verliebtinfarbe/" target="_blank" rel="noopener noreferrer" className="font-medium hover:text-boho-gold transition-colors">@verliebtinfarbe</a>.
+              <T i18nKey="works.desc" /><a href="https://www.instagram.com/verliebtinfarbe/" target="_blank" rel="noopener noreferrer" className="font-medium hover:text-boho-gold transition-colors">@verliebtinfarbe</a>.
             </p>
           </div>
           <a 
@@ -472,7 +534,7 @@ function GallerySnippet() {
             rel="noopener noreferrer"
             className="hidden md:inline-flex items-center text-sm uppercase tracking-widest text-boho-dark hover:text-boho-gold transition-colors mt-6 md:mt-0 pb-1 border-b border-boho-dark/20 hover:border-boho-gold"
           >
-            Folgen auf Instagram <ArrowRight className="w-3 h-3 ml-2" />
+            <T i18nKey="works.follow" /> <ArrowRight className="w-3 h-3 ml-2" />
           </a>
         </div>
       </div>
@@ -499,7 +561,7 @@ function GallerySnippet() {
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
                 />
                 <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                  <span className="bg-white/90 text-[#2d2d2d] px-4 py-2 text-sm uppercase tracking-wider rounded-full backdrop-blur-sm shadow-sm scale-90 group-hover:scale-100 transition-transform">Ansehen</span>
+                  <span className="bg-white/90 text-[#2d2d2d] px-4 py-2 text-sm uppercase tracking-wider rounded-full backdrop-blur-sm shadow-sm scale-90 group-hover:scale-100 transition-transform"><T i18nKey="works.view" /></span>
                 </div>
               </div>
             </div>
@@ -515,7 +577,7 @@ function GallerySnippet() {
           className="inline-flex items-center justify-center w-full px-6 py-3 border border-boho-dark text-boho-dark text-sm uppercase tracking-widest rounded-sm bg-transparent hover:bg-boho-dark hover:text-boho-cream transition-colors"
         >
           <Instagram className="w-4 h-4 mr-2" />
-          Zur Instagram Galerie
+          <T i18nKey="works.btn" />
         </a>
       </div>
 
@@ -617,16 +679,16 @@ function Gallery() {
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         <div className="text-center max-w-2xl mx-auto mb-16">
           <h2 className="font-serif text-4xl md:text-5xl lg:text-5xl leading-[1.3] mb-6 text-boho-dark">
-            Meine <span className="italic text-rainbow">Galerie</span>.
+            <T i18nKey="gallery.title.1" /><span className="italic text-rainbow"><T i18nKey="gallery.title.2" /></span><T i18nKey="gallery.title.dot" />
           </h2>
           <p className="text-boho-dark/70 font-light max-w-lg mx-auto mb-8">
-            Ein kleiner Einblick in meine bisherigen Arbeiten. Jedes Tattoo ist einzigartig und mit Liebe gestochen. Für mehr Eindrücke besuche gerne meinen Instagram-Kanal.
+            <T i18nKey="gallery.desc" />
           </p>
           <a
             href="https://www.instagram.com/verliebtinfarbe/"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center space-x-3 bg-boho-dark text-white px-6 py-3 rounded-full hover:bg-boho-gold transition-colors duration-300"
+            className="inline-flex items-center space-x-3 bg-boho-dark text-boho-cream px-6 py-3 rounded-full hover:bg-boho-gold hover:text-white transition-colors duration-300"
           >
             <Instagram className="w-5 h-5" />
             <span className="uppercase tracking-widest text-sm font-medium">Instagram</span>
@@ -653,7 +715,7 @@ function Gallery() {
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
               />
               <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                <span className="bg-white/90 text-[#2d2d2d] px-4 py-2 text-sm uppercase tracking-wider rounded-full backdrop-blur-sm shadow-sm scale-90 group-hover:scale-100 transition-transform">Ansehen</span>
+                <span className="bg-white/90 text-[#2d2d2d] px-4 py-2 text-sm uppercase tracking-wider rounded-full backdrop-blur-sm shadow-sm scale-90 group-hover:scale-100 transition-transform"><T i18nKey="works.view" /></span>
               </div>
             </motion.div>
           ))}
@@ -738,16 +800,15 @@ function Datenschutz() {
     >
       <div className="max-w-4xl mx-auto px-6 md:px-12">
         <h1 className="font-serif text-4xl md:text-5xl lg:text-5xl mb-12 text-boho-dark">
-          Datenschutz
+          <T i18nKey="privacy.title" />
         </h1>
         <div className="space-y-6 font-light text-boho-dark/80 leading-relaxed">
-          <h2 className="text-xl font-medium text-boho-dark">1. Datenschutz auf einen Blick</h2>
+          <h2 className="text-xl font-medium text-boho-dark"><T i18nKey="privacy.h2" /></h2>
           <p>
-            Allgemeine Hinweise: Die folgenden Hinweise geben einen einfachen Überblick darüber, 
-            was mit Ihren personenbezogenen Daten passiert, wenn Sie diese Website besuchen...
+            <T i18nKey="privacy.p1" />
           </p>
           <p className="mt-8 italic text-boho-dark/50">
-            (Hier kannst du später den vollständigen Text deiner Datenschutzerklärung einfügen.)
+            <T i18nKey="privacy.p2" />
           </p>
         </div>
       </div>
@@ -770,11 +831,11 @@ function Impressum() {
     >
       <div className="max-w-4xl mx-auto px-6 md:px-12">
         <h1 className="font-serif text-4xl md:text-5xl lg:text-5xl mb-12 text-boho-dark">
-          Impressum
+          <T i18nKey="imprint.title" />
         </h1>
         <div className="space-y-6 font-light text-boho-dark/80 leading-relaxed">
           <p className="italic text-boho-dark/50">
-            Impressum in Bearbeitung.
+            <T i18nKey="imprint.p1" />
           </p>
         </div>
       </div>
@@ -788,12 +849,12 @@ function Footer() {
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-start border-b border-boho-cream/20 pb-16">
           <div>
-            <h2 className="font-serif text-4xl md:text-5xl leading-[1.3] mb-6">Lass uns gemeinsam <br/><span className="text-rainbow italic">etwas Schönes</span> erschaffen.</h2>
+            <h2 className="font-serif text-4xl md:text-5xl leading-[1.3] mb-6"><T i18nKey="footer.title.1" /> <br/><span className="text-rainbow italic"><T i18nKey="footer.title.2" /></span> <T i18nKey="footer.title.3" /></h2>
             <p className="font-light text-boho-cream/70 max-w-md mb-8">
-              Bist du bereit für dein nächstes (oder erstes) Meisterwerk? Hast du Fragen zu einem Motiv? Ich freue mich von dir zu hören.
+              <T i18nKey="footer.desc" />
             </p>
             <button className="px-8 py-4 bg-boho-gold text-[#2d2d2d] rounded-sm hover:bg-boho-cream hover:text-boho-dark transition-colors duration-300 tracking-wide font-medium flex items-center">
-              Jetzt Termin anfragen
+              <T i18nKey="footer.btn" />
             </button>
           </div>
           
@@ -817,10 +878,10 @@ function Footer() {
         </div>
         
         <div className="pt-8 flex flex-col md:flex-row items-center justify-between text-xs text-boho-cream/50 font-light tracking-wide uppercase">
-          <p>&copy; {new Date().getFullYear()} Verliebt in Farbe. Alle Rechte vorbehalten.</p>
+          <p>&copy; {new Date().getFullYear()} <T i18nKey="footer.rights" /></p>
           <div className="flex space-x-6 mt-4 md:mt-0">
-            <Link to="/impressum" className="hover:text-boho-cream transition-colors">Impressum</Link>
-            <Link to="/datenschutz" className="hover:text-boho-cream transition-colors">Datenschutz</Link>
+            <Link to="/impressum" className="hover:text-boho-cream transition-colors"><T i18nKey="footer.imprint" /></Link>
+            <Link to="/datenschutz" className="hover:text-boho-cream transition-colors"><T i18nKey="footer.privacy" /></Link>
           </div>
         </div>
       </div>
