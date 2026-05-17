@@ -30,6 +30,7 @@ import vif16 from './assets/images/VIF16.jpeg';
 import vif17 from './assets/images/VIF17.jpeg';
 import vif18 from './assets/images/VIF18.jpeg';
 import vif19 from './assets/images/VIF19.jpeg';
+import vifLogo from './assets/images/vif-logo.jpeg';
 
 export default function App() {
   return (
@@ -61,8 +62,8 @@ function Navbar() {
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         {/* Logo & Social */}
         <div className="flex items-center space-x-4 md:space-x-6">
-          <Link to="/" className="font-serif text-2xl md:text-3xl font-medium tracking-tight text-boho-dark decoration-transparent hover:text-boho-gold transition-colors">
-            Verliebt in Farbe.
+          <Link to="/" className="hover:opacity-80 transition-opacity">
+            <img src={vifLogo} alt="Verliebt in Farbe Logo" className="h-14 md:h-16 w-auto object-contain rounded-full shadow-md" />
           </Link>
           <a 
             href="https://www.instagram.com/verliebtinfarbe/" 
@@ -133,7 +134,7 @@ function About() {
         
         <div className="w-full md:w-1/2 max-w-xl mx-auto md:mx-0">
           <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl mb-6 text-boho-dark">
-            Schön, dass <br/><span className="italic text-boho-gold">du da bist.</span>
+            Schön, dass <br/><span className="italic text-rainbow">du da bist.</span>
           </h1>
           
           <div className="space-y-6 text-boho-dark/80 font-light leading-relaxed">
@@ -197,7 +198,7 @@ function Hero() {
             <span>Fineline & Mandalas</span>
           </div>
           <h1 className="font-serif text-5xl md:text-6xl lg:text-7xl leading-[1.1] mb-6 text-boho-dark">
-            Sanfte Kunst,<br /> <span className="italic text-boho-gold">die unter die Haut geht.</span>
+            Sanfte Kunst,<br /> <span className="italic text-rainbow">die unter die Haut geht.</span>
           </h1>
           <p className="text-lg md:text-xl font-light text-boho-dark/80 mb-10 leading-relaxed">
             Feine Linien, florale Mandalas und ein liebevoll gestalteter Raum, in dem du dich rundum wohlfühlen kannst. Dein Körper, deine Geschichte, verewigt in zarter Farbe.
@@ -475,7 +476,7 @@ function Gallery() {
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         <div className="text-center max-w-2xl mx-auto mb-16">
           <h1 className="font-serif text-4xl md:text-5xl lg:text-5xl mb-6 text-boho-dark">
-            Meine <span className="italic text-boho-gold">Galerie</span>.
+            Meine <span className="italic text-rainbow">Galerie</span>.
           </h1>
           <p className="text-boho-dark/70 font-light max-w-lg mx-auto mb-8">
             Ein kleiner Einblick in meine bisherigen Arbeiten. Jedes Tattoo ist einzigartig und mit Liebe gestochen. Für mehr Eindrücke besuche gerne meinen Instagram-Kanal.
@@ -584,7 +585,7 @@ function Footer() {
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-start border-b border-white/10 pb-16">
           <div>
-            <h2 className="font-serif text-4xl md:text-5xl mb-6">Lass uns gemeinsam <br/><span className="text-boho-gold italic">etwas Schönes</span> erschaffen.</h2>
+            <h2 className="font-serif text-4xl md:text-5xl mb-6">Lass uns gemeinsam <br/><span className="text-rainbow italic">etwas Schönes</span> erschaffen.</h2>
             <p className="font-light text-white/70 max-w-md mb-8">
               Bist du bereit für dein nächstes (oder erstes) Meisterwerk? Hast du Fragen zu einem Motiv? Ich freue mich von dir zu hören.
             </p>
