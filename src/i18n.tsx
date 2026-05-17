@@ -97,6 +97,10 @@ export const translations: TranslationDictionary = {
 
   'imprint.title': { de: 'Impressum', en: 'Imprint' },
   'imprint.p1': { de: 'Impressum in Bearbeitung.', en: 'Imprint under construction.' },
+
+  'notfound.title': { de: '404', en: '404' },
+  'notfound.desc': { de: 'Hoppla, hier ist uns wohl die Farbe ausgegangen... Dieses Mandala wurde noch nicht gezeichnet oder die Seite existiert nicht mehr.', en: 'Oops, it seems we ran out of ink here... This mandala hasn\'t been drawn yet or the page no longer exists.' },
+  'notfound.btn': { de: 'Zurück zur Startseite', en: 'Back to home' },
 };
 
 interface LanguageContextType {

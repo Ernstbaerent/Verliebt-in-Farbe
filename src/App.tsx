@@ -53,6 +53,7 @@ export default function App() {
               <Route path="/gallery" element={<Gallery />} />
               <Route path="/impressum" element={<Impressum />} />
               <Route path="/datenschutz" element={<Datenschutz />} />
+              <Route path="*" element={<NotFound />} />
             </Routes>
           </main>
           <Footer />
@@ -886,5 +887,19 @@ function Footer() {
         </div>
       </div>
     </footer>
+  );
+}
+
+function NotFound() {
+  return (
+    <div className="flex flex-col items-center justify-center min-h-[70vh] px-6 text-center">
+      <h1 className="font-serif text-8xl md:text-9xl text-boho-dark mb-6 opacity-90"><T i18nKey="notfound.title" /></h1>
+      <p className="text-lg md:text-xl font-light text-boho-dark/80 max-w-lg mb-10 leading-relaxed">
+        <T i18nKey="notfound.desc" />
+      </p>
+      <Link to="/" className="px-8 py-4 bg-boho-dark text-boho-cream rounded-sm hover:bg-boho-gold hover:text-[#2d2d2d] transition-colors duration-300 tracking-wide font-light flex items-center justify-center group">
+        <T i18nKey="notfound.btn" />
+      </Link>
+    </div>
   );
 }
