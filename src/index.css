@@ -1,13 +1,31 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap');
 @import "tailwindcss";
 
+:root {
+  --theme-boho-cream: #faf9f6;
+  --theme-boho-rose: #f4e8e1;
+  --theme-boho-sage: #e3e7df;
+  --theme-boho-beige: #f5f0e6;
+  --theme-boho-dark: #2d2d2d;
+  --theme-boho-gold: #c5a059;
+}
+
+.dark {
+  --theme-boho-cream: #1a1a1a;
+  --theme-boho-rose: #2d2621;
+  --theme-boho-sage: #282a26;
+  --theme-boho-beige: #24221d;
+  --theme-boho-dark: #faf9f6;
+  --theme-boho-gold: #d4ae67;
+}
+
 @theme {
-  --color-boho-cream: #faf9f6;
-  --color-boho-rose: #f4e8e1;
-  --color-boho-sage: #e3e7df;
-  --color-boho-beige: #f5f0e6;
-  --color-boho-dark: #2d2d2d;
-  --color-boho-gold: #c5a059;
+  --color-boho-cream: var(--theme-boho-cream);
+  --color-boho-rose: var(--theme-boho-rose);
+  --color-boho-sage: var(--theme-boho-sage);
+  --color-boho-beige: var(--theme-boho-beige);
+  --color-boho-dark: var(--theme-boho-dark);
+  --color-boho-gold: var(--theme-boho-gold);
 
   --color-rainbow-1: #ffb6c1;
   --color-rainbow-2: #ffd700;
@@ -46,9 +64,15 @@
   background: linear-gradient(124deg, #ff718d, #f5d100, #4bd64b, #2aa0f5, #b854b8);
   background-size: 300% 300%;
   -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
   background-clip: text;
   color: transparent;
   animation: rainbow-bg 8s ease infinite;
+  line-height: normal;
+  padding-bottom: 0.15em;
+  padding-right: 0.1em;
 }
 
 body {
