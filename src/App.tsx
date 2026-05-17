@@ -30,7 +30,6 @@ import vif16 from './assets/images/VIF16.jpeg';
 import vif17 from './assets/images/VIF17.jpeg';
 import vif18 from './assets/images/VIF18.jpeg';
 import vif19 from './assets/images/VIF19.jpeg';
-import vif20 from './assets/images/VIF20.jpeg';
 
 export default function App() {
   return (
@@ -47,6 +46,7 @@ export default function App() {
               </>
             } />
             <Route path="/about" element={<About />} />
+            <Route path="/gallery" element={<Gallery />} />
           </Routes>
         </main>
         <Footer />
@@ -79,7 +79,7 @@ function Navbar() {
         <div className="hidden md:flex items-center space-x-8 text-sm uppercase tracking-widest font-light text-boho-dark/80">
           <Link to="/" className="hover:text-boho-gold transition-colors">Home</Link>
           <Link to="/about" className="hover:text-boho-gold transition-colors">Über mich</Link>
-          <a href="#" className="hover:text-boho-gold transition-colors">Galerie</a>
+          <Link to="/gallery" className="hover:text-boho-gold transition-colors">Galerie</Link>
           <a href="#" className="hover:text-boho-gold transition-colors">Termin buchen</a>
         </div>
 
@@ -101,7 +101,7 @@ function About() {
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentIdx((prev) => (prev + 1) % aniImages.length);
-    }, 4000);
+    }, 7000);
     return () => clearInterval(timer);
   }, [aniImages.length]);
 
@@ -112,11 +112,11 @@ function About() {
       exit={{ opacity: 0 }}
       className="py-16 md:py-24"
     >
-      <div className="max-w-7xl mx-auto px-6 md:px-12 flex flex-col md:flex-row gap-12 lg:gap-20 items-center">
-        <div className="relative w-full md:w-1/2 aspect-[4/5] max-w-md mx-auto md:max-w-none">
+      <div className="max-w-7xl mx-auto px-6 md:px-12 flex flex-col md:flex-row gap-12 lg:gap-20 items-start">
+        <div className="relative w-full md:w-1/2 md:sticky md:top-32 aspect-[4/5] max-w-md mx-auto md:max-w-none">
           <div className="absolute inset-0 bg-boho-rose/30 rounded-t-full translate-x-4 translate-y-4 -z-10"></div>
-          <div className="relative w-full h-full rounded-t-full border-8 border-white shadow-xl shadow-boho-dark/5 overflow-hidden">
-            <AnimatePresence mode="wait">
+          <div className="relative w-full h-full rounded-t-full border-8 border-white shadow-xl shadow-boho-dark/5 overflow-hidden bg-boho-beige/20">
+            <AnimatePresence>
               <motion.img 
                 key={currentIdx}
                 src={aniImages[currentIdx]} 
@@ -124,7 +124,7 @@ function About() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                transition={{ duration: 1 }}
+                transition={{ duration: 2, ease: "easeInOut" }}
                 className="absolute inset-0 w-full h-full object-cover rounded-t-full"
               />
             </AnimatePresence>
@@ -178,16 +178,6 @@ function About() {
 }
 
 function Hero() {
-  const aniImages = [heroImg, ani2, ani3, ani4];
-  const [currentIdx, setCurrentIdx] = useState(0);
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentIdx((prev) => (prev + 1) % aniImages.length);
-    }, 4000);
-    return () => clearInterval(timer);
-  }, [aniImages.length]);
-
   return (
     <section className="relative w-full py-20 lg:py-32 overflow-hidden flex items-center bg-boho-beige/30">
       <div className="absolute inset-0 z-0">
@@ -217,9 +207,9 @@ function Hero() {
               Jetzt Termin anfragen
               <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
             </button>
-            <a href="#" className="text-sm uppercase tracking-widest text-boho-dark/60 hover:text-boho-dark transition-colors border-b border-transparent hover:border-boho-dark pb-1">
+            <Link to="/gallery" className="text-sm uppercase tracking-widest text-boho-dark/60 hover:text-boho-dark transition-colors border-b border-transparent hover:border-boho-dark pb-1">
               Galerie ansehen
-            </a>
+            </Link>
           </div>
         </motion.div>
 
@@ -231,20 +221,11 @@ function Hero() {
           className="relative h-[500px] lg:h-[600px] w-full rounded-t-full overflow-hidden shadow-2xl shadow-boho-dark/5 border-[8px] border-boho-cream"
         >
           {/* Hero Image: Ani */}
-          <div className="relative w-full h-full">
-            <AnimatePresence mode="wait">
-              <motion.img 
-                key={currentIdx}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 1 }}
-                src={aniImages[currentIdx]} 
-                alt={`Ani ${currentIdx + 1}`} 
-                className="absolute inset-0 w-full h-full object-cover object-center"
-              />
-            </AnimatePresence>
-          </div>
+          <img 
+            src={heroImg} 
+            alt="Ani" 
+            className="w-full h-full object-cover object-center"
+          />
           <div className="absolute inset-0 bg-boho-gold/10 mix-blend-overlay"></div>
         </motion.div>
       </div>
@@ -328,7 +309,6 @@ function GallerySnippet() {
     { src: vif17, alt: "Fineline Tattoo Arbeit" },
     { src: vif18, alt: "Fineline Tattoo Arbeit" },
     { src: vif19, alt: "Fineline Tattoo Arbeit" },
-    { src: vif20, alt: "Fineline Tattoo Arbeit" },
   ];
 
   // Für den nahtlosen Marquee-Effekt verdoppeln wir die Bilder
@@ -457,6 +437,144 @@ function GallerySnippet() {
         )}
       </AnimatePresence>
     </section>
+  );
+}
+
+function Gallery() {
+  const [selectedIdx, setSelectedIdx] = useState<number | null>(null);
+
+  // Echte Bilder aus dem Upload
+  const images = [
+    { src: vif2, alt: "Fineline Tattoo Arbeit" },
+    { src: vif3, alt: "Fineline Tattoo Arbeit" },
+    { src: vif4, alt: "Fineline Tattoo Arbeit" },
+    { src: vif5, alt: "Fineline Tattoo Arbeit" },
+    { src: vif6, alt: "Fineline Tattoo Arbeit" },
+    { src: vif7, alt: "Fineline Tattoo Arbeit" },
+    { src: vif8, alt: "Fineline Tattoo Arbeit" },
+    { src: vif9, alt: "Fineline Tattoo Arbeit" },
+    { src: vif10, alt: "Fineline Tattoo Arbeit" },
+    { src: vif11, alt: "Fineline Tattoo Arbeit" },
+    { src: vif12, alt: "Fineline Tattoo Arbeit" },
+    { src: vif13, alt: "Fineline Tattoo Arbeit" },
+    { src: vif14, alt: "Fineline Tattoo Arbeit" },
+    { src: vif15, alt: "Fineline Tattoo Arbeit" },
+    { src: vif16, alt: "Fineline Tattoo Arbeit" },
+    { src: vif17, alt: "Fineline Tattoo Arbeit" },
+    { src: vif18, alt: "Fineline Tattoo Arbeit" },
+    { src: vif19, alt: "Fineline Tattoo Arbeit" },
+  ];
+
+  return (
+    <motion.section 
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="py-16 md:py-24 bg-boho-cream min-h-screen"
+    >
+      <div className="max-w-7xl mx-auto px-6 md:px-12">
+        <div className="text-center max-w-2xl mx-auto mb-16">
+          <h1 className="font-serif text-4xl md:text-5xl lg:text-5xl mb-6 text-boho-dark">
+            Meine <span className="italic text-boho-gold">Galerie</span>.
+          </h1>
+          <p className="text-boho-dark/70 font-light max-w-lg mx-auto mb-8">
+            Ein kleiner Einblick in meine bisherigen Arbeiten. Jedes Tattoo ist einzigartig und mit Liebe gestochen. Für mehr Eindrücke besuche gerne meinen Instagram-Kanal.
+          </p>
+          <a
+            href="https://www.instagram.com/verliebtinfarbe/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center space-x-3 bg-boho-dark text-white px-6 py-3 rounded-full hover:bg-boho-gold transition-colors duration-300"
+          >
+            <Instagram className="w-5 h-5" />
+            <span className="uppercase tracking-widest text-sm font-medium">Instagram</span>
+          </a>
+        </div>
+
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+          {images.map((img, idx) => (
+            <motion.div 
+              key={idx}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ delay: (idx % 4) * 0.1, duration: 0.6 }}
+              className="relative aspect-[4/5] overflow-hidden rounded-xl bg-boho-beige shadow-sm cursor-pointer group"
+              onClick={() => setSelectedIdx(idx)}
+            >
+              <img 
+                src={img.src} 
+                alt={img.alt}
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+              />
+              <div className="absolute inset-0 bg-boho-dark/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                <span className="bg-white/90 text-boho-dark px-4 py-2 text-sm uppercase tracking-wider rounded-full backdrop-blur-sm shadow-sm scale-90 group-hover:scale-100 transition-transform">Ansehen</span>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+
+      <AnimatePresence>
+        {selectedIdx !== null && (
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] flex items-center justify-center bg-boho-dark/95 backdrop-blur-md p-4"
+            onClick={() => setSelectedIdx(null)}
+          >
+            <button 
+              onClick={() => setSelectedIdx(null)}
+              className="absolute top-6 right-6 text-white hover:text-boho-gold transition-colors p-2 z-10"
+              aria-label="Schließen"
+            >
+              <X className="w-8 h-8" />
+            </button>
+            
+            <button 
+              onClick={(e) => {
+                e.stopPropagation();
+                setSelectedIdx((selectedIdx - 1 + images.length) % images.length);
+              }}
+              className="absolute left-4 md:left-12 text-white hover:text-boho-gold transition-colors p-3 bg-white/5 hover:bg-white/10 rounded-full z-10 backdrop-blur-sm border border-white/10"
+              aria-label="Vorheriges Bild"
+            >
+              <ChevronLeft className="w-6 h-6 md:w-10 md:h-10" />
+            </button>
+            
+            <div 
+              className="relative max-w-5xl max-h-[85vh] w-full flex items-center justify-center" 
+              onClick={(e) => e.stopPropagation()}
+            >
+              <motion.img 
+                key={selectedIdx}
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.3 }}
+                src={images[selectedIdx].src} 
+                alt={images[selectedIdx].alt} 
+                className="max-w-full max-h-[85vh] object-contain shadow-2xl rounded-sm"
+              />
+              <div className="absolute -bottom-10 left-0 right-0 text-center text-white/50 text-sm font-light tracking-widest">
+                {selectedIdx + 1} / {images.length}
+              </div>
+            </div>
+            
+            <button 
+              onClick={(e) => {
+                e.stopPropagation();
+                setSelectedIdx((selectedIdx + 1) % images.length);
+              }}
+              className="absolute right-4 md:right-12 text-white hover:text-boho-gold transition-colors p-3 bg-white/5 hover:bg-white/10 rounded-full z-10 backdrop-blur-sm border border-white/10"
+              aria-label="Nächstes Bild"
+            >
+              <ChevronRight className="w-6 h-6 md:w-10 md:h-10" />
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.section>
   );
 }
 
