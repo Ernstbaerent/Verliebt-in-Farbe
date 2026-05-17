@@ -3,20 +3,55 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { motion } from 'motion/react';
-import { Heart, Sparkles, ShieldCheck, ArrowRight, Instagram, Mail, MapPin } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+import { motion, AnimatePresence } from 'motion/react';
+import { Heart, Sparkles, ShieldCheck, ArrowRight, Instagram, Mail, MapPin, X, ChevronLeft, ChevronRight } from 'lucide-react';
+
+import heroImg from './assets/images/Ani1.jpeg';
+import ani2 from './assets/images/Ani2.jpeg';
+import ani3 from './assets/images/Ani3.jpeg';
+import ani4 from './assets/images/Ani4.jpeg';
+import vif2 from './assets/images/VIF2.jpeg';
+import vif3 from './assets/images/VIF3.jpeg';
+import vif4 from './assets/images/VIF4.jpeg';
+import vif5 from './assets/images/VIF5.jpeg';
+import vif6 from './assets/images/VIF6.jpeg';
+import vif7 from './assets/images/VIF7.jpeg';
+import vif8 from './assets/images/VIF8.jpeg';
+import vif9 from './assets/images/VIF9.jpeg';
+import vif10 from './assets/images/VIF10.jpeg';
+import vif11 from './assets/images/VIF11.jpeg';
+import vif12 from './assets/images/VIF12.jpeg';
+import vif13 from './assets/images/VIF13.jpeg';
+import vif14 from './assets/images/VIF14.jpeg';
+import vif15 from './assets/images/VIF15.jpeg';
+import vif16 from './assets/images/VIF16.jpeg';
+import vif17 from './assets/images/VIF17.jpeg';
+import vif18 from './assets/images/VIF18.jpeg';
+import vif19 from './assets/images/VIF19.jpeg';
+import vif20 from './assets/images/VIF20.jpeg';
 
 export default function App() {
   return (
-    <div className="min-h-screen bg-boho-cream text-boho-dark font-sans selection:bg-boho-rose selection:text-boho-dark flex flex-col">
-      <Navbar />
-      <main className="flex-grow">
-        <Hero />
-        <Atmosphere />
-        <GallerySnippet />
-      </main>
-      <Footer />
-    </div>
+    <BrowserRouter>
+      <div className="min-h-screen bg-boho-cream text-boho-dark font-sans selection:bg-boho-rose selection:text-boho-dark flex flex-col">
+        <Navbar />
+        <main className="flex-grow">
+          <Routes>
+            <Route path="/" element={
+              <>
+                <Hero />
+                <Atmosphere />
+                <GallerySnippet />
+              </>
+            } />
+            <Route path="/about" element={<About />} />
+          </Routes>
+        </main>
+        <Footer />
+      </div>
+    </BrowserRouter>
   );
 }
 
@@ -26,9 +61,9 @@ function Navbar() {
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         {/* Logo & Social */}
         <div className="flex items-center space-x-4 md:space-x-6">
-          <a href="#" className="font-serif text-2xl md:text-3xl font-medium tracking-tight text-boho-dark decoration-transparent hover:text-boho-gold transition-colors">
+          <Link to="/" className="font-serif text-2xl md:text-3xl font-medium tracking-tight text-boho-dark decoration-transparent hover:text-boho-gold transition-colors">
             Verliebt in Farbe.
-          </a>
+          </Link>
           <a 
             href="https://www.instagram.com/verliebtinfarbe/" 
             target="_blank" 
@@ -42,8 +77,8 @@ function Navbar() {
 
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center space-x-8 text-sm uppercase tracking-widest font-light text-boho-dark/80">
-          <a href="#" className="hover:text-boho-gold transition-colors">Home</a>
-          <a href="#" className="hover:text-boho-gold transition-colors">Über mich</a>
+          <Link to="/" className="hover:text-boho-gold transition-colors">Home</Link>
+          <Link to="/about" className="hover:text-boho-gold transition-colors">Über mich</Link>
           <a href="#" className="hover:text-boho-gold transition-colors">Galerie</a>
           <a href="#" className="hover:text-boho-gold transition-colors">Termin buchen</a>
         </div>
@@ -59,7 +94,100 @@ function Navbar() {
   );
 }
 
+function About() {
+  const aniImages = [heroImg, ani2, ani3, ani4];
+  const [currentIdx, setCurrentIdx] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentIdx((prev) => (prev + 1) % aniImages.length);
+    }, 4000);
+    return () => clearInterval(timer);
+  }, [aniImages.length]);
+
+  return (
+    <motion.section 
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="py-16 md:py-24"
+    >
+      <div className="max-w-7xl mx-auto px-6 md:px-12 flex flex-col md:flex-row gap-12 lg:gap-20 items-center">
+        <div className="relative w-full md:w-1/2 aspect-[4/5] max-w-md mx-auto md:max-w-none">
+          <div className="absolute inset-0 bg-boho-rose/30 rounded-t-full translate-x-4 translate-y-4 -z-10"></div>
+          <div className="relative w-full h-full rounded-t-full border-8 border-white shadow-xl shadow-boho-dark/5 overflow-hidden">
+            <AnimatePresence mode="wait">
+              <motion.img 
+                key={currentIdx}
+                src={aniImages[currentIdx]} 
+                alt={`Ani ${currentIdx + 1}`} 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 1 }}
+                className="absolute inset-0 w-full h-full object-cover rounded-t-full"
+              />
+            </AnimatePresence>
+          </div>
+        </div>
+        
+        <div className="w-full md:w-1/2 max-w-xl mx-auto md:mx-0">
+          <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl mb-6 text-boho-dark">
+            Schön, dass <br/><span className="italic text-boho-gold">du da bist.</span>
+          </h1>
+          
+          <div className="space-y-6 text-boho-dark/80 font-light leading-relaxed">
+            <p>
+              Hey, ich bin Ani! Das Gesicht und die Seele hinter "Verliebt in Farbe". Seit über 15 Jahren ist das Tätowieren für mich nicht nur ein Handwerk, sondern meine absolute Herzensangelegenheit und größte Leidenschaft.
+            </p>
+            <p>
+              Mein Fokus liegt auf zarten Fineline-Arbeiten und detailverliebten Mandalas, die sanft deine natürlichen Kurven betonen. Es ist mir besonders wichtig, Kunstwerke zu erschaffen, die weiblich, fein und absolut einzigartig auf dich abgestimmt sind.
+            </p>
+            <p>
+              In meinem Studio in Mohlsdorf habe ich einen echten "Safe Space" geschaffen – einen Raum, in dem du dich vollkommen fallen lassen darfst. Mir ist ein liebevoller, rücksichtsvoller und einfühlsamer Umgang extrem wichtig. Egal, ob es dein allererstes Tattoo ist oder du schon lange sammelst: Bei mir kommst du an, darfst entspannen und dich einfach wohlfühlen. Niemand wird gehetzt, und wir nehmen uns immer die Zeit, die du brauchst, damit du dich absolut sicher und verstanden fühlst.
+            </p>
+            <p className="font-medium text-boho-dark pt-4">
+              Ich freue mich von Herzen darauf, deine Geschichte unter die Haut zu bringen!
+            </p>
+          </div>
+          
+          <div className="mt-10">
+            <Link to="/" className="inline-flex items-center px-8 py-4 bg-boho-dark text-white rounded-sm hover:bg-boho-gold transition-colors duration-300 tracking-wide font-light group">
+              Zurück zur Startseite
+            </Link>
+          </div>
+        </div>
+      </div>
+      
+      {/* Mini Info-Box unten */}
+      <div className="max-w-5xl mx-auto px-6 md:px-12 mt-24">
+        <div className="bg-white/60 border border-boho-beige p-8 md:p-12 rounded-3xl flex flex-col md:flex-row gap-8 items-center text-center md:text-left justify-between shadow-sm">
+          <div>
+            <h3 className="font-serif text-2xl mb-2 text-boho-dark">Lass uns kreativ werden</h3>
+            <p className="text-boho-dark/70 font-light text-sm md:text-base max-w-lg">
+              Dein Körper ist einzigartig und genau so sollte auch dein Tattoo sein. Falls du Fragen oder schon eine grobe Idee hast, schreib mir einfach!
+            </p>
+          </div>
+          <button className="whitespace-nowrap px-6 py-3 bg-boho-gold text-boho-dark rounded-sm hover:bg-boho-dark hover:text-white transition-colors tracking-widest text-sm uppercase">
+            Termin anfragen
+          </button>
+        </div>
+      </div>
+    </motion.section>
+  );
+}
+
 function Hero() {
+  const aniImages = [heroImg, ani2, ani3, ani4];
+  const [currentIdx, setCurrentIdx] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentIdx((prev) => (prev + 1) % aniImages.length);
+    }, 4000);
+    return () => clearInterval(timer);
+  }, [aniImages.length]);
+
   return (
     <section className="relative w-full py-20 lg:py-32 overflow-hidden flex items-center bg-boho-beige/30">
       <div className="absolute inset-0 z-0">
@@ -95,19 +223,29 @@ function Hero() {
           </div>
         </motion.div>
 
-        {/* Hero Abstract Image / Aesthetic visual */}
+        {/* Hero Abstract Image / Ani Tattooing visual */}
         <motion.div 
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
-          className="relative h-[500px] lg:h-[600px] w-full rounded-t-full overflow-hidden shadow-2xl shadow-boho-dark/5"
+          className="relative h-[500px] lg:h-[600px] w-full rounded-t-full overflow-hidden shadow-2xl shadow-boho-dark/5 border-[8px] border-boho-cream"
         >
-          <img 
-            src="https://images.unsplash.com/photo-1598371839696-5b5bb00eb06c?auto=format&fit=crop&q=80&w=1000" 
-            alt="Tattoo Kunst" 
-            className="w-full h-full object-cover object-center"
-          />
-          <div className="absolute inset-0 bg-boho-dark/10 mix-blend-overlay"></div>
+          {/* Hero Image: Ani */}
+          <div className="relative w-full h-full">
+            <AnimatePresence mode="wait">
+              <motion.img 
+                key={currentIdx}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 1 }}
+                src={aniImages[currentIdx]} 
+                alt={`Ani ${currentIdx + 1}`} 
+                className="absolute inset-0 w-full h-full object-cover object-center"
+              />
+            </AnimatePresence>
+          </div>
+          <div className="absolute inset-0 bg-boho-gold/10 mix-blend-overlay"></div>
         </motion.div>
       </div>
     </section>
@@ -168,25 +306,45 @@ function Atmosphere() {
 }
 
 function GallerySnippet() {
-  // Diese Platzhalter können durch eigene Bilder ersetzt werden
+  const [selectedIdx, setSelectedIdx] = useState<number | null>(null);
+
+  // Echte Bilder aus dem Upload
   const images = [
-    { src: "https://images.unsplash.com/photo-1611501271618-918968f9a2de?auto=format&fit=crop&q=80&w=600", alt: "Fineline Blumen Tattoo" },
-    { src: "https://images.unsplash.com/photo-1590246814883-587b1c313a1a?auto=format&fit=crop&q=80&w=600", alt: "Boho Mandala Detail" },
-    { src: "https://images.unsplash.com/photo-1550236520-216dc7b5fb99?auto=format&fit=crop&q=80&w=600", alt: "Zartes Fineline Tattoo" },
-    { src: "https://images.unsplash.com/photo-1560707854-fb9a10efa0b3?auto=format&fit=crop&q=80&w=600", alt: "Detail Tattoo Arbeit" },
+    { src: vif2, alt: "Fineline Tattoo Arbeit" },
+    { src: vif3, alt: "Fineline Tattoo Arbeit" },
+    { src: vif4, alt: "Fineline Tattoo Arbeit" },
+    { src: vif5, alt: "Fineline Tattoo Arbeit" },
+    { src: vif6, alt: "Fineline Tattoo Arbeit" },
+    { src: vif7, alt: "Fineline Tattoo Arbeit" },
+    { src: vif8, alt: "Fineline Tattoo Arbeit" },
+    { src: vif9, alt: "Fineline Tattoo Arbeit" },
+    { src: vif10, alt: "Fineline Tattoo Arbeit" },
+    { src: vif11, alt: "Fineline Tattoo Arbeit" },
+    { src: vif12, alt: "Fineline Tattoo Arbeit" },
+    { src: vif13, alt: "Fineline Tattoo Arbeit" },
+    { src: vif14, alt: "Fineline Tattoo Arbeit" },
+    { src: vif15, alt: "Fineline Tattoo Arbeit" },
+    { src: vif16, alt: "Fineline Tattoo Arbeit" },
+    { src: vif17, alt: "Fineline Tattoo Arbeit" },
+    { src: vif18, alt: "Fineline Tattoo Arbeit" },
+    { src: vif19, alt: "Fineline Tattoo Arbeit" },
+    { src: vif20, alt: "Fineline Tattoo Arbeit" },
   ];
 
+  // Für den nahtlosen Marquee-Effekt verdoppeln wir die Bilder
+  const marqueeImages = [...images, ...images];
+
   return (
-    <section className="py-24 bg-boho-rose/20 rounded-t-[3rem] lg:rounded-t-[5rem]">
-      <div className="max-w-7xl mx-auto px-6 md:px-12">
-        <div className="flex flex-col md:flex-row justify-between items-end mb-12">
+    <section className="py-24 bg-boho-rose/20 rounded-t-[3rem] lg:rounded-t-[5rem] overflow-hidden">
+      <div className="max-w-7xl mx-auto px-6 md:px-12 mb-12">
+        <div className="flex flex-col md:flex-row justify-between items-end">
           <div className="max-w-xl">
             <h2 className="font-serif text-4xl mb-4 flex items-center gap-3">
               <Instagram className="w-8 h-8 text-boho-dark" />
-              Auf Instagram
+              Meine Arbeiten
             </h2>
             <p className="text-boho-dark/70 font-light">
-              Während du darauf wartest, dass hier deine eigenen Bilder eingefügt werden, findest du meine neuesten Fineline- & Mandala-Projekte direkt unter <a href="https://www.instagram.com/verliebtinfarbe/" target="_blank" rel="noopener noreferrer" className="font-medium hover:text-boho-gold transition-colors">@verliebtinfarbe</a>.
+              Lass dich von meinen neuesten Fineline- & Mandala-Projekten inspirieren. Jedes Design ist einzigartig und wird individuell angefertigt. Mehr Entwürfe und fertige Arbeiten findest du auf <a href="https://www.instagram.com/verliebtinfarbe/" target="_blank" rel="noopener noreferrer" className="font-medium hover:text-boho-gold transition-colors">@verliebtinfarbe</a>.
             </p>
           </div>
           <a 
@@ -198,43 +356,106 @@ function GallerySnippet() {
             Folgen auf Instagram <ArrowRight className="w-3 h-3 ml-2" />
           </a>
         </div>
-        
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 relative group/feed">
-          {images.map((img, idx) => (
-            <motion.div 
+      </div>
+      
+      {/* Smooth Marquee Galerie */}
+      {/* Die Container stellen sicher, dass alle Bilder dieselbe Größe/Hintergrund ("den selben Hintergrund") haben */}
+      <div className="relative w-full flex overflow-hidden py-4">
+        <div className="flex w-max animate-marquee hover:[animation-play-state:paused] items-center">
+          {marqueeImages.map((img, idx) => (
+            <div 
               key={idx}
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: idx * 0.1, duration: 0.5 }}
-              className="aspect-square overflow-hidden rounded-xl bg-boho-beige relative cursor-pointer"
+              className="w-[260px] md:w-[320px] aspect-[4/5] mx-4 overflow-hidden rounded-xl bg-boho-cream shadow-md shadow-boho-dark/5 p-3 flex-shrink-0 relative group cursor-pointer"
+              onClick={() => setSelectedIdx(idx % images.length)}
             >
-              <a href="https://www.instagram.com/verliebtinfarbe/" target="_blank" rel="noopener noreferrer" className="block w-full h-full">
+              {/* Innerer Rahmen, um jedem Bild denselben Hintergrund zu geben (z.B. object-contain für Freisteller) */}
+              <div className="w-full h-full rounded-lg overflow-hidden border border-boho-beige relative bg-white flex items-center justify-center">
                 <img 
                   src={img.src} 
                   alt={img.alt}
-                  className="w-full h-full object-cover group-hover/feed:opacity-80 hover:!opacity-100 transition-opacity duration-300"
+                  /* object-cover nutzen wir für normale Bilder, falls sie freigestellt sind, hilft object-contain */
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
                 />
-                <div className="absolute inset-0 flex flex-col justify-center items-center opacity-0 hover:opacity-100 transition-opacity duration-300">
-                  <Instagram className="w-8 h-8 text-white drop-shadow-md" />
+                <div className="absolute inset-0 bg-boho-dark/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                  <span className="bg-white/90 text-boho-dark px-4 py-2 text-sm uppercase tracking-wider rounded-full backdrop-blur-sm shadow-sm scale-90 group-hover:scale-100 transition-transform">Ansehen</span>
                 </div>
-              </a>
-            </motion.div>
+              </div>
+            </div>
           ))}
         </div>
-        
-        <div className="mt-10 text-center md:hidden">
-          <a 
-            href="https://www.instagram.com/verliebtinfarbe/" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="inline-flex items-center justify-center px-6 py-3 border border-boho-dark text-boho-dark text-sm uppercase tracking-widest rounded-sm bg-transparent hover:bg-boho-dark hover:text-boho-cream transition-colors"
-          >
-            <Instagram className="w-4 h-4 mr-2" />
-            Zur Galerie
-          </a>
-        </div>
       </div>
+      
+      <div className="mt-12 text-center md:hidden px-6">
+        <a 
+          href="https://www.instagram.com/verliebtinfarbe/" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="inline-flex items-center justify-center w-full px-6 py-3 border border-boho-dark text-boho-dark text-sm uppercase tracking-widest rounded-sm bg-transparent hover:bg-boho-dark hover:text-boho-cream transition-colors"
+        >
+          <Instagram className="w-4 h-4 mr-2" />
+          Zur Instagram Galerie
+        </a>
+      </div>
+
+      <AnimatePresence>
+        {selectedIdx !== null && (
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] flex items-center justify-center bg-boho-dark/95 backdrop-blur-md p-4"
+            onClick={() => setSelectedIdx(null)}
+          >
+            <button 
+              onClick={() => setSelectedIdx(null)}
+              className="absolute top-6 right-6 text-white hover:text-boho-gold transition-colors p-2 z-10"
+              aria-label="Schließen"
+            >
+              <X className="w-8 h-8" />
+            </button>
+            
+            <button 
+              onClick={(e) => {
+                e.stopPropagation();
+                setSelectedIdx((selectedIdx - 1 + images.length) % images.length);
+              }}
+              className="absolute left-4 md:left-12 text-white hover:text-boho-gold transition-colors p-3 bg-white/5 hover:bg-white/10 rounded-full z-10 backdrop-blur-sm border border-white/10"
+              aria-label="Vorheriges Bild"
+            >
+              <ChevronLeft className="w-6 h-6 md:w-10 md:h-10" />
+            </button>
+            
+            <div 
+              className="relative max-w-5xl max-h-[85vh] w-full flex items-center justify-center" 
+              onClick={(e) => e.stopPropagation()}
+            >
+              <motion.img 
+                key={selectedIdx}
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.3 }}
+                src={images[selectedIdx].src} 
+                alt={images[selectedIdx].alt} 
+                className="max-w-full max-h-[85vh] object-contain shadow-2xl rounded-sm"
+              />
+              <div className="absolute -bottom-10 left-0 right-0 text-center text-white/50 text-sm font-light tracking-widest">
+                {selectedIdx + 1} / {images.length}
+              </div>
+            </div>
+            
+            <button 
+              onClick={(e) => {
+                e.stopPropagation();
+                setSelectedIdx((selectedIdx + 1) % images.length);
+              }}
+              className="absolute right-4 md:right-12 text-white hover:text-boho-gold transition-colors p-3 bg-white/5 hover:bg-white/10 rounded-full z-10 backdrop-blur-sm border border-white/10"
+              aria-label="Nächstes Bild"
+            >
+              <ChevronRight className="w-6 h-6 md:w-10 md:h-10" />
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 }
@@ -259,15 +480,15 @@ function Footer() {
             <div className="space-y-4 font-light text-white/70 text-sm md:text-right">
               <p className="flex items-center md:justify-end gap-3">
                 <MapPin className="w-4 h-4 text-boho-gold" />
-                Musterstraße 12, 12345 Traumstadt
+                Friedhofstraße 7, 07987 Mohlsdorf-Teichwolfrahmsdorf
               </p>
               <p className="flex items-center md:justify-end gap-3">
                 <Mail className="w-4 h-4 text-boho-gold" />
-                hallo@verliebtinfarbe.de
+                verliebt-in-farbe@web.de
               </p>
-              <a href="#" className="flex items-center md:justify-end gap-3 hover:text-boho-gold transition-colors">
+              <a href="https://www.instagram.com/verliebtinfarbe/" target="_blank" rel="noopener noreferrer" className="flex items-center md:justify-end gap-3 hover:text-boho-gold transition-colors">
                 <Instagram className="w-4 h-4 text-boho-gold" />
-                @verliebtinfarbe_tattoo
+                @verliebtinfarbe
               </a>
             </div>
           </div>
