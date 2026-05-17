@@ -1,0 +1,6 @@
+{
+  "name": "Verliebt in Farbe",
+  "description": "Eine elegante Website für das Tattoo-Studio 'Verliebt in Farbe', spezialisiert auf Fineline und Mandalas.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
