@@ -48,11 +48,66 @@ export default function App() {
             } />
             <Route path="/about" element={<About />} />
             <Route path="/gallery" element={<Gallery />} />
+            <Route path="/impressum" element={<Impressum />} />
+            <Route path="/datenschutz" element={<Datenschutz />} />
           </Routes>
         </main>
         <Footer />
+        <CookieBanner />
       </div>
     </BrowserRouter>
+  );
+}
+
+function CookieBanner() {
+  const [showBanner, setShowBanner] = useState(false);
+
+  useEffect(() => {
+    const consent = localStorage.getItem('cookieSettings');
+    if (!consent) {
+      setShowBanner(true);
+    }
+  }, []);
+
+  const handleAccept = () => {
+    localStorage.setItem('cookieSettings', 'accepted');
+    setShowBanner(false);
+  };
+
+  const handleReject = () => {
+    localStorage.setItem('cookieSettings', 'rejected');
+    setShowBanner(false);
+  };
+
+  if (!showBanner) return null;
+
+  return (
+    <motion.div 
+      initial={{ y: 100, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      className="fixed bottom-0 left-0 right-0 z-[999] bg-boho-cream border-t border-boho-dark/10 shadow-2xl p-6"
+    >
+      <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+        <div className="text-sm font-light text-boho-dark/80 max-w-3xl">
+          Wir verwenden Cookies, um dir das beste Erlebnis auf unserer Website zu bieten. Einige von ihnen sind essenziell, während andere uns helfen, diese Website zu verbessern. 
+          Weitere Informationen findest du in unserer <Link to="/datenschutz" className="underline hover:text-boho-gold">Datenschutzerklärung</Link> und im <Link to="/impressum" className="underline hover:text-boho-gold">Impressum</Link>.
+        </div>
+        <div className="flex items-center space-x-4 w-full md:w-auto">
+          <button 
+            onClick={handleReject}
+            className="flex-1 md:flex-none px-6 py-3 border border-boho-dark text-boho-dark rounded-sm hover:bg-boho-dark hover:text-boho-cream transition-colors duration-300 tracking-wide font-medium text-sm whitespace-nowrap"
+          >
+            Alle ablehnen
+          </button>
+          <button 
+            onClick={handleAccept}
+            className="flex-1 md:flex-none px-6 py-3 border border-boho-dark text-boho-dark rounded-sm hover:bg-boho-dark hover:text-boho-cream transition-colors duration-300 tracking-wide font-medium text-sm whitespace-nowrap"
+          >
+            Alle akzeptieren
+          </button>
+        </div>
+      </div>
+    </motion.div>
   );
 }
 
@@ -579,6 +634,76 @@ function Gallery() {
   );
 }
 
+function Datenschutz() {
+  // Always scroll to top when page is rendered
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  return (
+    <motion.section 
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="py-16 md:py-24 bg-boho-cream min-h-screen"
+    >
+      <div className="max-w-4xl mx-auto px-6 md:px-12">
+        <h1 className="font-serif text-4xl md:text-5xl lg:text-5xl mb-12 text-boho-dark">
+          Datenschutz
+        </h1>
+        <div className="space-y-6 font-light text-boho-dark/80 leading-relaxed">
+          <h2 className="text-xl font-medium text-boho-dark">1. Datenschutz auf einen Blick</h2>
+          <p>
+            Allgemeine Hinweise: Die folgenden Hinweise geben einen einfachen Überblick darüber, 
+            was mit Ihren personenbezogenen Daten passiert, wenn Sie diese Website besuchen...
+          </p>
+          <p className="mt-8 italic text-boho-dark/50">
+            (Hier kannst du später den vollständigen Text deiner Datenschutzerklärung einfügen.)
+          </p>
+        </div>
+      </div>
+    </motion.section>
+  );
+}
+
+function Impressum() {
+  // Always scroll to top when page is rendered
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  return (
+    <motion.section 
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="py-16 md:py-24 bg-boho-cream min-h-screen"
+    >
+      <div className="max-w-4xl mx-auto px-6 md:px-12">
+        <h1 className="font-serif text-4xl md:text-5xl lg:text-5xl mb-12 text-boho-dark">
+          Impressum
+        </h1>
+        <div className="space-y-6 font-light text-boho-dark/80 leading-relaxed">
+          <h2 className="text-xl font-medium text-boho-dark">Angaben gemäß § 5 TMG</h2>
+          <p>
+            Max Mustermann<br />
+            Musterstraße 1<br />
+            12345 Musterstadt
+          </p>
+          <h2 className="text-xl font-medium text-boho-dark mt-8">Kontakt</h2>
+          <p>
+            Telefon: +49 (0) 123 44 55 66<br />
+            E-Mail: info@musteradresse.de
+          </p>
+          <p className="mt-8 italic text-boho-dark/50">
+            (Hier kannst du später deine echten Impressums-Daten eintragen.)
+          </p>
+        </div>
+      </div>
+    </motion.section>
+  );
+}
+
 function Footer() {
   return (
     <footer className="bg-boho-dark text-boho-cream py-20 px-6 md:px-12">
@@ -616,9 +741,8 @@ function Footer() {
         <div className="pt-8 flex flex-col md:flex-row items-center justify-between text-xs text-white/40 font-light tracking-wide uppercase">
           <p>&copy; {new Date().getFullYear()} Verliebt in Farbe. Alle Rechte vorbehalten.</p>
           <div className="flex space-x-6 mt-4 md:mt-0">
-            <a href="#" className="hover:text-white transition-colors">Impressum</a>
-            <a href="#" className="hover:text-white transition-colors">Datenschutz</a>
-            <a href="#" className="hover:text-white transition-colors">AGB</a>
+            <Link to="/impressum" className="hover:text-white transition-colors">Impressum</Link>
+            <Link to="/datenschutz" className="hover:text-white transition-colors">Datenschutz</Link>
           </div>
         </div>
       </div>
