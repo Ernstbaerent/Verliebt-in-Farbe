@@ -113,6 +113,7 @@ function CookieBanner() {
 
 function DarkModeToggle() {
   const [isDark, setIsDark] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
 
   useEffect(() => {
     // Check local storage or time of day
@@ -121,6 +122,9 @@ function DarkModeToggle() {
       if (storedPreference === 'dark') {
         setIsDark(true);
         document.documentElement.classList.add('dark');
+      } else if (storedPreference === 'light') {
+        setIsDark(false);
+        document.documentElement.classList.remove('dark');
       }
     } else {
       // Adjust based on time of day (e.g. dark from 20:00 to 06:00)
@@ -143,13 +147,43 @@ function DarkModeToggle() {
     }
   };
 
+  const showSun = isHovered ? isDark : !isDark;
+
   return (
     <button 
       onClick={toggleTheme}
-      className="text-boho-dark hover:text-boho-gold transition-colors border border-boho-dark/20 hover:border-boho-gold rounded-full w-8 h-8 flex items-center justify-center"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      onFocus={() => setIsHovered(true)}
+      onBlur={() => setIsHovered(false)}
+      className="text-boho-dark hover:text-boho-gold transition-colors duration-300 border border-boho-dark/20 hover:border-boho-gold rounded-full w-8 h-8 flex items-center justify-center relative overflow-hidden"
       aria-label="Toggle Dark Mode"
     >
-      {isDark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+      <AnimatePresence mode="wait" initial={false}>
+        {showSun ? (
+          <motion.div
+            key="sun"
+            initial={{ opacity: 0, rotate: -90, scale: 0.5 }}
+            animate={{ opacity: 1, rotate: 0, scale: 1 }}
+            exit={{ opacity: 0, rotate: 90, scale: 0.5 }}
+            transition={{ duration: 0.3 }}
+            className="absolute"
+          >
+            <Sun className="w-4 h-4" />
+          </motion.div>
+        ) : (
+          <motion.div
+            key="moon"
+            initial={{ opacity: 0, rotate: -90, scale: 0.5 }}
+            animate={{ opacity: 1, rotate: 0, scale: 1 }}
+            exit={{ opacity: 0, rotate: 90, scale: 0.5 }}
+            transition={{ duration: 0.3 }}
+            className="absolute"
+          >
+            <Moon className="w-4 h-4" />
+          </motion.div>
+        )}
+      </AnimatePresence>
     </button>
   );
 }
@@ -160,8 +194,8 @@ function Navbar() {
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         {/* Logo & Social */}
         <div className="flex items-center space-x-4 md:space-x-6">
-          <Link to="/" className="hover:opacity-80 transition-opacity">
-            <img src={vifLogo} alt="Verliebt in Farbe - Fineline Tattoo Studio Logo" width="64" height="64" className="h-14 md:h-16 w-auto object-contain rounded-full shadow-md dark:bg-white p-[2px]" />
+          <Link to="/" className="group">
+            <img src={vifLogo} alt="Verliebt in Farbe - Fineline Tattoo Studio Logo" width="64" height="64" className="h-14 md:h-16 w-auto object-contain rounded-full shadow-md dark:bg-white p-[2px] group-hover:scale-110 group-hover:rotate-[5deg] transition-all duration-300 ease-out" />
           </Link>
           <a 
             href="https://www.instagram.com/verliebtinfarbe/" 
