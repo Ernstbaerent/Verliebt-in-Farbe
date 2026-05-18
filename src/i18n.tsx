@@ -13,6 +13,7 @@ export const translations: TranslationDictionary = {
   'nav.home': { de: 'Home', en: 'Home' },
   'nav.about': { de: 'Über mich', en: 'About me' },
   'nav.gallery': { de: 'Galerie', en: 'Gallery' },
+  'nav.contact': { de: 'Kontakt', en: 'Contact' },
   'nav.booking': { de: 'Termin buchen', en: 'Book an appointment' },
   
   'cookie.text': { 
@@ -89,6 +90,7 @@ export const translations: TranslationDictionary = {
   'footer.rights': { de: 'Verliebt in Farbe. Alle Rechte vorbehalten.', en: 'Verliebt in Farbe. All rights reserved.' },
   'footer.imprint': { de: 'Impressum', en: 'Imprint' },
   'footer.privacy': { de: 'Datenschutz', en: 'Privacy' },
+  'footer.contact': { de: 'Kontakt', en: 'Contact' },
 
   'privacy.title': { de: 'Datenschutz', en: 'Privacy Policy' },
   'privacy.h2': { de: 'Datenschutzerklärung', en: 'Privacy Policy' },
@@ -99,6 +101,17 @@ export const translations: TranslationDictionary = {
   'imprint.h2': { de: 'Angaben gemäß § 5 TMG', en: 'Information according to § 5 TMG' },
   'imprint.p1': { de: '[HIER RECHTSSICHEREN IMPRESSUMSTEXT FÜR VERLIEBTINFARBE.DE EINFÜGEN]', en: '[INSERT LEGALLY COMPLIANT IMPRINT TEXT FOR VERLIEBTINFARBE.DE HERE]' },
   'imprint.p2': { de: 'Kontakt: verliebt-in-farbe@web.de', en: 'Contact: verliebt-in-farbe@web.de' },
+
+  'contact.title': { de: 'Schreib mir deine Tattoo-Idee', en: 'Tell me your tattoo idea' },
+  'contact.desc': { de: 'Du hast Fragen zu einem Motiv, den Platzierungen oder möchtest mir deine Inspirationen schicken? Schreib mir ganz unverbindlich. Deine Daten werden sicher und verschlüsselt übertragen.', en: 'Do you have questions about a design, the placement or want to send me your inspirations? Write me without any obligation. Your data will be transmitted securely and encrypted.' },
+  'contact.name': { de: 'Dein Name', en: 'Your Name' },
+  'contact.email': { de: 'Deine E-Mail-Adresse', en: 'Your Email Address' },
+  'contact.message': { de: 'Deine Nachricht', en: 'Your Message' },
+  'contact.upload': { de: 'Ziehe deine Wunsch-Motive hierher oder klicke zum Auswählen (JPG, PNG, max. 10 MB)', en: 'Drag your desired motives here or click to select (JPG, PNG, max. 10 MB)' },
+  'contact.privacy': { de: 'Ich willige ein, dass meine Daten und hochgeladenen Bildvorlagen ausschließlich zur Bearbeitung der Anfrage und Tattoo-Vorbereitung verarbeitet werden (Siehe ', en: 'I agree that my data and uploaded image templates will be processed exclusively for the processing of the request and tattoo preparation (See ' },
+  'contact.privacyLink': { de: 'Datenschutzerklärung', en: 'Privacy Policy' },
+  'contact.privacyEnd': { de: ').', en: ').' },
+  'contact.submit': { de: 'Anfrage senden', en: 'Send Request' },
 
   'notfound.title': { de: '404', en: '404' },
   'notfound.desc': { de: 'Hoppla, hier ist uns wohl die Farbe ausgegangen... Dieses Mandala wurde noch nicht gezeichnet oder die Seite existiert nicht mehr.', en: 'Oops, it seems we ran out of ink here... This mandala hasn\'t been drawn yet or the page no longer exists.' },
