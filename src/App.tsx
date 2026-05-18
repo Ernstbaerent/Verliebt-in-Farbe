@@ -505,28 +505,39 @@ function GallerySnippet() {
 
   // Echte Bilder aus dem Upload
   const images = [
-    { src: vif2, alt: "Filigranes Fineline Tattoo von Ani - Verliebt in Farbe" },
-    { src: vif3, alt: "Detailverliebtes Mandala Tattoo - Verliebt in Farbe" },
-    { src: vif4, alt: "Zartes Fineline Tattoo " },
-    { src: vif5, alt: "Individuelles Tattoo Design " },
-    { src: vif6, alt: "Florales Fineline Tattoo " },
-    { src: vif7, alt: "Elegantes Mandala Tattoo Design" },
-    { src: vif8, alt: "Feines Linien Tattoo Kunstwerk" },
-    { src: vif9, alt: "Minimalistisches Tattoo Verliebt in Farbe" },
-    { src: vif10, alt: "Fineline Tattoo Studio " },
-    { src: vif11, alt: "Sanftes Mandala Tattoo für Frauen" },
-    { src: vif12, alt: "Zart gestochenes Wunschmotiv" },
-    { src: vif13, alt: "Einzigartiges Fineline Tattoo" },
-    { src: vif14, alt: "Tattoo Studio für Frauen " },
-    { src: vif15, alt: "Mandala und Fineline Tattoo " },
-    { src: vif16, alt: "Filigrane Linienführung " },
-    { src: vif17, alt: "Feines Tattoo Motiv" },
-    { src: vif18, alt: "Individuelles Mandala Design " },
-    { src: vif19, alt: "Zartes Fineline Tattoo Mohlsdorf" },
+    { src: vif2, alt: "Handgelenk-Tattoo mit fein gestochenen floralen Elementen und zarten Blättern" },
+    { src: vif3, alt: "Großflächiges, detailreiches Mandala-Tattoo auf dem Oberschenkel mit geometrischen Mustern" },
+    { src: vif4, alt: "Kleines, minimalistisches Fineline-Tattoo eines Halbmondes mit Sternen" },
+    { src: vif5, alt: "Elegantes Schriftzug-Tattoo in feiner Schreibschrift auf dem Unterarm" },
+    { src: vif6, alt: "Zartes Wildblumen-Bouquet Fineline-Tattoo auf der Schulter" },
+    { src: vif7, alt: "Ornamentales Mandala-Tattoo mit Lotusblüten-Details auf dem Rücken" },
+    { src: vif8, alt: "Feines Linien-Tattoo zweier sich berührender Hände im minimalistischen Stil" },
+    { src: vif9, alt: "Symmetrisches, florales Mandala-Motiv auf dem Unterarm" },
+    { src: vif10, alt: "Minimalistisches Tierportrait im Fineline-Stil" },
+    { src: vif11, alt: "Zierliches Knöchel-Tattoo mit kleinen Ranken und Punkten" },
+    { src: vif12, alt: "Fein schattiertes Rosen-Tattoo mit detaillierten Blättern" },
+    { src: vif13, alt: "Abstraktes, fließendes Fineline-Tattoo auf dem Rippenbogen" },
+    { src: vif14, alt: "Zartes Schmetterling-Tattoo mit dünnen Linien und Dotwork" },
+    { src: vif15, alt: "Kombination aus ornamentalem Mandala und feiner Linienführung" },
+    { src: vif16, alt: "Filigranes Ast-Tattoo mit feinen Details" },
+    { src: vif17, alt: "Kleines Symbol-Tattoo im zarten Dotwork-Stil" },
+    { src: vif18, alt: "Verspieltes Mandala-Design mit feinen Schmuck-Details" },
+    { src: vif19, alt: "Detailverliebte Fineline-Blüten auf heller Haut" },
   ];
 
   // Für den nahtlosen Marquee-Effekt verdoppeln wir die Bilder
   const marqueeImages = [...images, ...images];
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (selectedIdx === null) return;
+      if (e.key === 'Escape') setSelectedIdx(null);
+      if (e.key === 'ArrowRight') setSelectedIdx((selectedIdx + 1) % images.length);
+      if (e.key === 'ArrowLeft') setSelectedIdx((selectedIdx - 1 + images.length) % images.length);
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [selectedIdx, images.length]);
 
   return (
     <section className="py-24 bg-boho-rose/20 rounded-t-[3rem] lg:rounded-t-[5rem] overflow-hidden">
@@ -568,6 +579,7 @@ function GallerySnippet() {
                 <img 
                   src={img.src} 
                   alt={img.alt}
+                  aria-label={img.alt}
                   loading="lazy"
                   width="320"
                   height="400"
@@ -603,6 +615,9 @@ function GallerySnippet() {
             exit={{ opacity: 0 }}
             className="fixed inset-0 z-[100] flex items-center justify-center bg-zinc-900/95 backdrop-blur-md p-4"
             onClick={() => setSelectedIdx(null)}
+            role="dialog"
+            aria-modal="true"
+            aria-label="Bildergalerie Lightbox"
           >
             <button 
               onClick={() => setSelectedIdx(null)}
@@ -634,6 +649,7 @@ function GallerySnippet() {
                 transition={{ duration: 0.3 }}
                 src={images[selectedIdx].src} 
                 alt={images[selectedIdx].alt} 
+                aria-label={images[selectedIdx].alt}
                 className="max-w-full max-h-[85vh] object-contain shadow-2xl rounded-sm"
               />
               <div className="absolute -bottom-10 left-0 right-0 text-center text-white/50 text-sm font-light tracking-widest">
@@ -663,25 +679,36 @@ function Gallery() {
 
   // Echte Bilder aus dem Upload
   const images = [
-    { src: vif2, alt: "Filigranes Fineline Tattoo von Ani - Verliebt in Farbe" },
-    { src: vif3, alt: "Detailverliebtes Mandala Tattoo - Verliebt in Farbe" },
-    { src: vif4, alt: "Zartes Fineline Tattoo " },
-    { src: vif5, alt: "Individuelles Tattoo Design " },
-    { src: vif6, alt: "Florales Fineline Tattoo " },
-    { src: vif7, alt: "Elegantes Mandala Tattoo Design" },
-    { src: vif8, alt: "Feines Linien Tattoo Kunstwerk" },
-    { src: vif9, alt: "Minimalistisches Tattoo Verliebt in Farbe" },
-    { src: vif10, alt: "Fineline Tattoo Studio " },
-    { src: vif11, alt: "Sanftes Mandala Tattoo für Frauen" },
-    { src: vif12, alt: "Zart gestochenes Wunschmotiv" },
-    { src: vif13, alt: "Einzigartiges Fineline Tattoo" },
-    { src: vif14, alt: "Tattoo Studio für Frauen " },
-    { src: vif15, alt: "Mandala und Fineline Tattoo " },
-    { src: vif16, alt: "Filigrane Linienführung " },
-    { src: vif17, alt: "Feines Tattoo Motiv" },
-    { src: vif18, alt: "Individuelles Mandala Design " },
-    { src: vif19, alt: "Zartes Fineline Tattoo Mohlsdorf" },
+    { src: vif2, alt: "Handgelenk-Tattoo mit fein gestochenen floralen Elementen und zarten Blättern" },
+    { src: vif3, alt: "Großflächiges, detailreiches Mandala-Tattoo auf dem Oberschenkel mit geometrischen Mustern" },
+    { src: vif4, alt: "Kleines, minimalistisches Fineline-Tattoo eines Halbmondes mit Sternen" },
+    { src: vif5, alt: "Elegantes Schriftzug-Tattoo in feiner Schreibschrift auf dem Unterarm" },
+    { src: vif6, alt: "Zartes Wildblumen-Bouquet Fineline-Tattoo auf der Schulter" },
+    { src: vif7, alt: "Ornamentales Mandala-Tattoo mit Lotusblüten-Details auf dem Rücken" },
+    { src: vif8, alt: "Feines Linien-Tattoo zweier sich berührender Hände im minimalistischen Stil" },
+    { src: vif9, alt: "Symmetrisches, florales Mandala-Motiv auf dem Unterarm" },
+    { src: vif10, alt: "Minimalistisches Tierportrait im Fineline-Stil" },
+    { src: vif11, alt: "Zierliches Knöchel-Tattoo mit kleinen Ranken und Punkten" },
+    { src: vif12, alt: "Fein schattiertes Rosen-Tattoo mit detaillierten Blättern" },
+    { src: vif13, alt: "Abstraktes, fließendes Fineline-Tattoo auf dem Rippenbogen" },
+    { src: vif14, alt: "Zartes Schmetterling-Tattoo mit dünnen Linien und Dotwork" },
+    { src: vif15, alt: "Kombination aus ornamentalem Mandala und feiner Linienführung" },
+    { src: vif16, alt: "Filigranes Ast-Tattoo mit feinen Details" },
+    { src: vif17, alt: "Kleines Symbol-Tattoo im zarten Dotwork-Stil" },
+    { src: vif18, alt: "Verspieltes Mandala-Design mit feinen Schmuck-Details" },
+    { src: vif19, alt: "Detailverliebte Fineline-Blüten auf heller Haut" },
   ];
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (selectedIdx === null) return;
+      if (e.key === 'Escape') setSelectedIdx(null);
+      if (e.key === 'ArrowRight') setSelectedIdx((selectedIdx + 1) % images.length);
+      if (e.key === 'ArrowLeft') setSelectedIdx((selectedIdx - 1 + images.length) % images.length);
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [selectedIdx, images.length]);
 
   return (
     <motion.section 
@@ -724,6 +751,7 @@ function Gallery() {
               <img 
                 src={img.src} 
                 alt={img.alt}
+                aria-label={img.alt}
                 loading="lazy"
                 width="400"
                 height="500"
@@ -745,6 +773,9 @@ function Gallery() {
             exit={{ opacity: 0 }}
             className="fixed inset-0 z-[100] flex items-center justify-center bg-zinc-900/95 backdrop-blur-md p-4"
             onClick={() => setSelectedIdx(null)}
+            role="dialog"
+            aria-modal="true"
+            aria-label="Bildergalerie Lightbox"
           >
             <button 
               onClick={() => setSelectedIdx(null)}
@@ -776,6 +807,7 @@ function Gallery() {
                 transition={{ duration: 0.3 }}
                 src={images[selectedIdx].src} 
                 alt={images[selectedIdx].alt} 
+                aria-label={images[selectedIdx].alt}
                 className="max-w-full max-h-[85vh] object-contain shadow-2xl rounded-sm"
               />
               <div className="absolute -bottom-10 left-0 right-0 text-center text-white/50 text-sm font-light tracking-widest">
