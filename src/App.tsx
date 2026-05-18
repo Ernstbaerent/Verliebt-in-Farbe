@@ -91,6 +91,9 @@ function CookieBanner() {
       initial={{ y: 100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       className="fixed bottom-0 left-0 right-0 z-[999] bg-boho-cream border-t border-boho-dark/10 shadow-2xl p-6"
+      role="dialog"
+      aria-label="Cookie-Richtlinien Banner"
+      aria-live="polite"
     >
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
         <div className="text-sm font-light text-boho-dark/80 max-w-3xl">
@@ -157,15 +160,16 @@ function DarkModeToggle() {
   const showSun = isHovered ? isDark : !isDark;
 
   return (
-    <button 
-      onClick={toggleTheme}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      onFocus={() => setIsHovered(true)}
-      onBlur={() => setIsHovered(false)}
-      className="text-boho-dark hover:text-boho-gold transition-colors duration-300 border border-boho-dark/20 hover:border-boho-gold rounded-full w-8 h-8 flex items-center justify-center relative overflow-hidden"
-      aria-label="Toggle Dark Mode"
-    >
+            <button 
+          onClick={toggleTheme}
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+          onFocus={() => setIsHovered(true)}
+          onBlur={() => setIsHovered(false)}
+          className="text-boho-dark hover:text-boho-gold transition-colors duration-300 border border-boho-dark/20 hover:border-boho-gold rounded-full w-8 h-8 flex items-center justify-center relative overflow-hidden"
+          aria-label={isDark ? "Lichtmodus einschalten" : "Dunkelmodus einschalten"}
+          aria-live="polite"
+        >
       <AnimatePresence mode="wait" initial={false}>
         {showSun ? (
           <motion.div
@@ -202,14 +206,15 @@ function LanguageToggle() {
   const displayLang = isHovered ? (lang === 'de' ? 'EN' : 'DE') : (lang === 'de' ? 'DE' : 'EN');
 
   return (
-    <button 
+            <button 
       onClick={toggleLang}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onFocus={() => setIsHovered(true)}
       onBlur={() => setIsHovered(false)}
       className="text-boho-dark text-xs font-semibold tracking-wider hover:text-boho-gold transition-colors duration-300 border border-boho-dark/20 hover:border-boho-gold rounded-full w-8 h-8 flex items-center justify-center relative overflow-hidden"
-      aria-label="Toggle Language"
+      aria-label={lang === 'de' ? "Switch to English" : "Auf Deutsch wechseln"}
+      aria-live="polite"
     >
       <AnimatePresence mode="wait" initial={false}>
         <motion.span
@@ -232,7 +237,8 @@ function Navbar() {
   const { t } = useLanguage();
 
   return (
-    <nav className="sticky top-0 z-50 bg-boho-cream/90 backdrop-blur-md border-b border-boho-beige py-4 px-6 md:px-12">
+  <header className="sticky top-0 z-50 bg-boho-cream/90 backdrop-blur-md border-b border-boho-beige">
+    <nav className="py-4 px-6 md:px-12" aria-label="Hauptnavigation">
       <div className="max-w-7xl mx-auto flex items-center justify-between relative">
         {/* Logo & Social */}
         <div className="flex items-center space-x-4 md:space-x-4">
@@ -266,19 +272,21 @@ function Navbar() {
           className="md:hidden p-2 text-boho-dark hover:text-boho-gold transition-colors"
           aria-label="Menü öffnen/schließen"
         >
-          {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-        </button>
-
-        {/* Mobile Navigation Dropdown */}
-        <AnimatePresence>
-          {isMobileMenuOpen && (
-            <motion.div 
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.2 }}
-              className="absolute top-full left-0 right-0 mt-4 bg-boho-cream border border-boho-beige shadow-xl rounded-xl p-6 flex flex-col space-y-6 md:hidden z-50 text-center"
-            >
+              {isMobileMenuOpen ? <X className="w-6 h-6" aria-hidden="true" /> : <Menu className="w-6 h-6" aria-hidden="true" />}
+            </button>
+    
+            {/* Mobile Navigation Dropdown */}
+            <AnimatePresence>
+              {isMobileMenuOpen && (
+                <motion.div 
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.2 }}
+                  className="absolute top-full left-0 right-0 mt-4 bg-boho-cream border border-boho-beige shadow-xl rounded-xl p-6 flex flex-col space-y-6 md:hidden z-50 text-center"
+                  role="menu"
+                  aria-label="Mobile Navigation"
+                >
               <Link to="/" onClick={() => setIsMobileMenuOpen(false)} className="text-boho-dark hover:text-boho-gold transition-colors text-sm uppercase tracking-widest font-light"><T i18nKey="nav.home" /></Link>
               <Link to="/about" onClick={() => setIsMobileMenuOpen(false)} className="text-boho-dark hover:text-boho-gold transition-colors text-sm uppercase tracking-widest font-light"><T i18nKey="nav.about" /></Link>
               <Link to="/gallery" onClick={() => setIsMobileMenuOpen(false)} className="text-boho-dark hover:text-boho-gold transition-colors text-sm uppercase tracking-widest font-light"><T i18nKey="nav.gallery" /></Link>
@@ -287,7 +295,8 @@ function Navbar() {
           )}
         </AnimatePresence>
       </div>
-    </nav>
+      </nav>
+    </header>
   );
 }
 
@@ -545,10 +554,11 @@ function GallerySnippet() {
       <div className="relative w-full flex overflow-hidden py-4">
         <div className="flex w-max animate-marquee hover:[animation-play-state:paused] items-center">
           {marqueeImages.map((img, idx) => (
-            <div 
+            <button 
               key={idx}
-              className="w-[260px] md:w-[320px] aspect-[4/5] mx-4 overflow-hidden rounded-xl bg-zinc-100 dark:bg-zinc-800 shadow-md shadow-boho-dark/5 p-3 flex-shrink-0 relative group cursor-pointer"
+              className="w-[260px] md:w-[320px] aspect-[4/5] mx-4 overflow-hidden rounded-xl bg-zinc-100 dark:bg-zinc-800 shadow-md shadow-boho-dark/5 p-3 flex-shrink-0 relative group cursor-pointer text-left"
               onClick={() => setSelectedIdx(idx % images.length)}
+              aria-label={`Bild öffnen: ${img.alt}`}
             >
               {/* Innerer Rahmen, um jedem Bild denselben Hintergrund zu geben (z.B. object-contain für Freisteller) */}
               <div className="w-full h-full rounded-lg overflow-hidden border border-zinc-200 dark:border-zinc-700 relative bg-zinc-200 dark:bg-zinc-900 flex items-center justify-center">
@@ -565,7 +575,7 @@ function GallerySnippet() {
                   <span className="bg-white/90 text-[#2d2d2d] px-4 py-2 text-sm uppercase tracking-wider rounded-full backdrop-blur-sm shadow-sm scale-90 group-hover:scale-100 transition-transform"><T i18nKey="works.view" /></span>
                 </div>
               </div>
-            </div>
+            </button>
           ))}
         </div>
       </div>
@@ -698,14 +708,15 @@ function Gallery() {
 
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
           {images.map((img, idx) => (
-            <motion.div 
+            <motion.button 
               key={idx}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ delay: (idx % 4) * 0.1, duration: 0.6 }}
-              className="relative aspect-[4/5] overflow-hidden rounded-xl bg-boho-beige dark:bg-zinc-800 shadow-sm cursor-pointer group"
+              className="relative w-full aspect-[4/5] overflow-hidden rounded-xl bg-boho-beige dark:bg-zinc-800 shadow-sm cursor-pointer group text-left"
               onClick={() => setSelectedIdx(idx)}
+              aria-label={`Bild öffnen: ${img.alt}`}
             >
               <img 
                 src={img.src} 
@@ -718,7 +729,7 @@ function Gallery() {
               <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                 <span className="bg-white/90 text-[#2d2d2d] px-4 py-2 text-sm uppercase tracking-wider rounded-full backdrop-blur-sm shadow-sm scale-90 group-hover:scale-100 transition-transform"><T i18nKey="works.view" /></span>
               </div>
-            </motion.div>
+            </motion.button>
           ))}
         </div>
       </div>

@@ -4,10 +4,10 @@
 :root {
   --theme-boho-cream: #faf9f6;
   --theme-boho-rose: #f4e8e1;
-  --theme-boho-sage: #e3e7df;
+  --theme-boho-sage: #e3e7df; /* Subtle sage for background elements */
   --theme-boho-beige: #f5f0e6;
   --theme-boho-dark: #2d2d2d;
-  --theme-boho-gold: #c5a059;
+  --theme-boho-gold: #8c6c33; /* Darkened for 4.5:1 WCAG contrast */
 }
 
 .dark {
@@ -82,6 +82,12 @@
   line-height: normal;
   padding-bottom: 0.15em;
   padding-right: 0.1em;
+}
+
+@layer base {
+  a, button, input, textarea, select {
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7a8b71] dark:focus-visible:ring-[#f5f0e6] focus-visible:ring-offset-2 focus-visible:ring-offset-boho-cream dark:focus-visible:ring-offset-boho-dark;
+  }
 }
 
 body {
