@@ -91,12 +91,14 @@ export const translations: TranslationDictionary = {
   'footer.privacy': { de: 'Datenschutz', en: 'Privacy' },
 
   'privacy.title': { de: 'Datenschutz', en: 'Privacy Policy' },
-  'privacy.h2': { de: '1. Datenschutz auf einen Blick', en: '1. Data protection at a glance' },
-  'privacy.p1': { de: 'Allgemeine Hinweise: Die folgenden Hinweise geben einen einfachen Überblick darüber, was mit Ihren personenbezogenen Daten passiert, wenn Sie diese Website besuchen...', en: 'General notes: The following notes give a simple overview of what happens to your personal data when you visit this website...' },
-  'privacy.p2': { de: '(Hier kannst du später den vollständigen Text deiner Datenschutzerklärung einfügen.)', en: '(You can insert the full text of your privacy policy here later.)' },
+  'privacy.h2': { de: 'Datenschutzerklärung', en: 'Privacy Policy' },
+  'privacy.p1': { de: '[HIER DATENSCHUTZTEXT EINFÜGEN]', en: '[INSERT PRIVACY POLICY TEXT HERE]' },
+  'privacy.p2': { de: 'Wir nehmen den Schutz deiner persönlichen Daten sehr ernst. Wir behandeln deine personenbezogenen Daten vertraulich und entsprechend der gesetzlichen Datenschutzvorschriften...', en: 'We take the protection of your personal data very seriously. We treat your personal data confidentially and in accordance with the statutory data protection regulations...' },
 
   'imprint.title': { de: 'Impressum', en: 'Imprint' },
-  'imprint.p1': { de: 'Impressum in Bearbeitung.', en: 'Imprint under construction.' },
+  'imprint.h2': { de: 'Angaben gemäß § 5 TMG', en: 'Information according to § 5 TMG' },
+  'imprint.p1': { de: '[HIER RECHTSSICHEREN IMPRESSUMSTEXT FÜR VERLIEBTINFARBE.DE EINFÜGEN]', en: '[INSERT LEGALLY COMPLIANT IMPRINT TEXT FOR VERLIEBTINFARBE.DE HERE]' },
+  'imprint.p2': { de: 'Kontakt: verliebt-in-farbe@web.de', en: 'Contact: verliebt-in-farbe@web.de' },
 
   'notfound.title': { de: '404', en: '404' },
   'notfound.desc': { de: 'Hoppla, hier ist uns wohl die Farbe ausgegangen... Dieses Mandala wurde noch nicht gezeichnet oder die Seite existiert nicht mehr.', en: 'Oops, it seems we ran out of ink here... This mandala hasn\'t been drawn yet or the page no longer exists.' },

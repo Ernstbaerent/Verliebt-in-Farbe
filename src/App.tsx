@@ -803,8 +803,8 @@ function Datenschutz() {
         <h1 className="font-serif text-4xl md:text-5xl lg:text-5xl mb-12 text-boho-dark">
           <T i18nKey="privacy.title" />
         </h1>
-        <div className="space-y-6 font-light text-boho-dark/80 leading-relaxed">
-          <h2 className="text-xl font-medium text-boho-dark"><T i18nKey="privacy.h2" /></h2>
+        <div className="space-y-6 font-light text-boho-dark/80 leading-relaxed text-lg">
+          <h2 className="text-2xl font-serif text-boho-dark mt-10 mb-4"><T i18nKey="privacy.h2" /></h2>
           <p>
             <T i18nKey="privacy.p1" />
           </p>
@@ -834,9 +834,13 @@ function Impressum() {
         <h1 className="font-serif text-4xl md:text-5xl lg:text-5xl mb-12 text-boho-dark">
           <T i18nKey="imprint.title" />
         </h1>
-        <div className="space-y-6 font-light text-boho-dark/80 leading-relaxed">
-          <p className="italic text-boho-dark/50">
+        <div className="space-y-6 font-light text-boho-dark/80 leading-relaxed text-lg">
+          <h2 className="text-2xl font-serif text-boho-dark mt-10 mb-4"><T i18nKey="imprint.h2" /></h2>
+          <p>
             <T i18nKey="imprint.p1" />
+          </p>
+          <p className="mt-8">
+            <T i18nKey="imprint.p2" />
           </p>
         </div>
       </div>
