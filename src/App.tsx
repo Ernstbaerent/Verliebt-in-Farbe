@@ -951,24 +951,51 @@ function Impressum() {
     window.scrollTo(0, 0);
   }, []);
 
+  const heading2 = "font-serif text-2xl md:text-3xl text-boho-dark dark:text-boho-cream mt-12 mb-6";
+  const paragraph = "font-light text-boho-dark/80 dark:text-boho-cream/80 leading-relaxed mb-4";
+
   return (
     <motion.section 
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="py-16 md:py-24 bg-boho-cream min-h-screen"
+      className="py-16 md:py-24 bg-boho-cream dark:bg-[#1f1a18] min-h-screen transition-colors duration-500"
     >
       <div className="max-w-4xl mx-auto px-6 md:px-12">
-        <h1 className="font-serif text-4xl md:text-5xl lg:text-5xl mb-12 text-boho-dark">
-          <T i18nKey="imprint.title" />
+        <h1 className="font-serif text-4xl md:text-5xl lg:text-5xl mb-12 text-boho-dark dark:text-boho-cream">
+          Impressum
         </h1>
-        <div className="space-y-6 font-light text-boho-dark/80 leading-relaxed text-lg">
-          <h2 className="text-2xl font-serif text-boho-dark mt-10 mb-4"><T i18nKey="imprint.h2" /></h2>
-          <p>
-            <T i18nKey="imprint.p1" />
+        <div className="text-lg">
+          <h2 className={heading2}>Angaben gemäß § 5 TMG</h2>
+          <p className={paragraph}>
+            Anika Daßler<br />
+            Verliebt in Farbe<br />
+            Friedhofstraße 7<br />
+            07987 Mohlsdorf-Teichwolframsdorf
           </p>
-          <p className="mt-8">
-            <T i18nKey="imprint.p2" />
+
+          <h2 className={heading2}>Kontakt</h2>
+          <p className={paragraph}>
+            Telefon: [TRAGE HIER ANIS TELEFONNUMMER EIN]<br />
+            E-Mail: ani@verliebtinfarbe.de
+          </p>
+
+          <h2 className={heading2}>Redaktionell verantwortlich</h2>
+          <p className={paragraph}>
+            Anika Daßler<br />
+            Friedhofstraße 7<br />
+            07987 Mohlsdorf-Teichwolframsdorf
+          </p>
+
+          <h2 className={heading2}>EU-Streitschlichtung</h2>
+          <p className={paragraph}>
+            Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit: <a href="https://ec.europa.eu/consumers/odr" target="_blank" rel="noopener noreferrer" className="underline hover:text-boho-gold transition-colors">https://ec.europa.eu/consumers/odr</a>.<br />
+            Unsere E-Mail-Adresse finden Sie oben im Impressum.
+          </p>
+
+          <h2 className={heading2}>Verbraucherstreitbeilegung/Universalschlichtungsstelle</h2>
+          <p className={paragraph}>
+            Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.
           </p>
         </div>
       </div>
@@ -1108,7 +1135,7 @@ function Footer() {
               </p>
               <p className="flex items-center md:justify-end gap-3">
                 <Mail className="w-4 h-4 text-boho-cream" />
-                verliebt-in-farbe@web.de
+                ani@verliebtinfarbe.de
               </p>
               <a href="https://www.instagram.com/verliebtinfarbe/" target="_blank" rel="noopener noreferrer" className="flex items-center md:justify-end gap-3 hover:text-boho-cream transition-colors group">
                 <Instagram className="w-4 h-4 text-boho-cream group-hover:scale-110 transition-transform" />

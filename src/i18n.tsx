@@ -100,7 +100,7 @@ export const translations: TranslationDictionary = {
   'imprint.title': { de: 'Impressum', en: 'Imprint' },
   'imprint.h2': { de: 'Angaben gemäß § 5 TMG', en: 'Information according to § 5 TMG' },
   'imprint.p1': { de: '[HIER RECHTSSICHEREN IMPRESSUMSTEXT FÜR VERLIEBTINFARBE.DE EINFÜGEN]', en: '[INSERT LEGALLY COMPLIANT IMPRINT TEXT FOR VERLIEBTINFARBE.DE HERE]' },
-  'imprint.p2': { de: 'Kontakt: verliebt-in-farbe@web.de', en: 'Contact: verliebt-in-farbe@web.de' },
+  'imprint.p2': { de: 'Kontakt: ani@verliebtinfarbe.de', en: 'Contact: ani@verliebtinfarbe.de' },
 
   'contact.title': { de: 'Schreib mir deine Tattoo-Idee', en: 'Tell me your tattoo idea' },
   'contact.desc': { de: 'Du hast Fragen zu einem Motiv, den Platzierungen oder möchtest mir deine Inspirationen schicken? Schreib mir ganz unverbindlich. Deine Daten werden sicher und verschlüsselt übertragen.', en: 'Do you have questions about a design, the placement or want to send me your inspirations? Write me without any obligation. Your data will be transmitted securely and encrypted.' },
