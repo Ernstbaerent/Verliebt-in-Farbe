@@ -37,7 +37,7 @@ import { LanguageProvider, useLanguage, T } from './i18n';
 export default function App() {
   return (
     <LanguageProvider>
-      <BrowserRouter>
+      <BrowserRouter basename="/Verliebt-in-Farbe">
         <div className="min-h-screen bg-boho-cream text-boho-dark font-sans selection:bg-boho-rose selection:text-boho-dark flex flex-col">
           <Navbar />
           <main className="flex-grow">
