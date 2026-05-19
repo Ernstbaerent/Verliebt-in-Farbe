@@ -13,6 +13,7 @@ export const translations: TranslationDictionary = {
   'nav.home': { de: 'Home', en: 'Home' },
   'nav.about': { de: 'Über mich', en: 'About me' },
   'nav.gallery': { de: 'Galerie', en: 'Gallery' },
+  'nav.blog': { de: 'Blog', en: 'Blog' },
   'nav.contact': { de: 'Kontakt', en: 'Contact' },
   'nav.booking': { de: 'Termin buchen', en: 'Book an appointment' },
   

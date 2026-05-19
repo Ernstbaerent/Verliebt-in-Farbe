@@ -4,7 +4,7 @@
  */
 
 import { useState, useEffect } from 'react';
-import { HashRouter, Routes, Route, Link, Navigate } from 'react-router-dom';
+import { HashRouter, Routes, Route, Link, Navigate, useParams } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import { Heart, Sparkles, ShieldCheck, ArrowRight, Instagram, Mail, MapPin, X, ChevronLeft, ChevronRight, Moon, Sun, Menu, UploadCloud } from 'lucide-react';
 
@@ -56,6 +56,8 @@ export default function App() {
               <Route path="/home" element={<Home />} />
               <Route path="/about" element={<About />} />
               <Route path="/gallery" element={<Gallery />} />
+              <Route path="/blog" element={<Blog />} />
+              <Route path="/blog/:id" element={<BlogPost />} />
               <Route path="/impressum" element={<Impressum />} />
               <Route path="/datenschutz" element={<Datenschutz />} />
               <Route path="/kontakt" element={<ContactPage />} />
@@ -269,6 +271,7 @@ function Navbar() {
           <Link to="/" className="hover:text-boho-gold transition-colors"><T i18nKey="nav.home" /></Link>
           <Link to="/about" className="hover:text-boho-gold transition-colors"><T i18nKey="nav.about" /></Link>
           <Link to="/gallery" className="hover:text-boho-gold transition-colors"><T i18nKey="nav.gallery" /></Link>
+          <Link to="/blog" className="hover:text-boho-gold transition-colors"><T i18nKey="nav.blog" /></Link>
           <Link to="/kontakt" className="hover:text-boho-gold transition-colors"><T i18nKey="nav.contact" /></Link>
           <a href="#" className="hover:text-boho-gold transition-colors"><T i18nKey="nav.booking" /></a>
         </div>
@@ -297,6 +300,7 @@ function Navbar() {
               <Link to="/" onClick={() => setIsMobileMenuOpen(false)} className="text-boho-dark hover:text-boho-gold transition-colors text-sm uppercase tracking-widest font-light"><T i18nKey="nav.home" /></Link>
               <Link to="/about" onClick={() => setIsMobileMenuOpen(false)} className="text-boho-dark hover:text-boho-gold transition-colors text-sm uppercase tracking-widest font-light"><T i18nKey="nav.about" /></Link>
               <Link to="/gallery" onClick={() => setIsMobileMenuOpen(false)} className="text-boho-dark hover:text-boho-gold transition-colors text-sm uppercase tracking-widest font-light"><T i18nKey="nav.gallery" /></Link>
+              <Link to="/blog" onClick={() => setIsMobileMenuOpen(false)} className="text-boho-dark hover:text-boho-gold transition-colors text-sm uppercase tracking-widest font-light"><T i18nKey="nav.blog" /></Link>
               <Link to="/kontakt" onClick={() => setIsMobileMenuOpen(false)} className="text-boho-dark hover:text-boho-gold transition-colors text-sm uppercase tracking-widest font-light"><T i18nKey="nav.contact" /></Link>
               <a href="#" onClick={() => setIsMobileMenuOpen(false)} className="text-boho-dark hover:text-boho-gold transition-colors text-sm uppercase tracking-widest font-light"><T i18nKey="nav.booking" /></a>
             </motion.div>
@@ -1192,6 +1196,121 @@ function Footer() {
         </div>
       </div>
     </footer>
+  );
+}
+
+const blogPosts = [
+  {
+    id: 1,
+    title: 'Die Bedeutung von Fineline Tattoos',
+    date: '15. Mai 2024',
+    excerpt: 'Warum Fineline Tattoos mehr als nur ein Trend sind und wie sie deine Persönlichkeit sanft unterstreichen...',
+    content: 'Fineline Tattoos zeichnen sich durch ihre unglaubliche Zartheit aus. Anders als traditionelle Tattoos verwenden wir hier dünnere Nadeln, was zu einem filigranen und oft sehr eleganten Look führt. \n\nViele meiner Kundinnen wählen diesen Stil, weil er nicht aufdringlich ist und sich wunderschön an die natürlichen Linien des Körpers anpasst...',
+    image: vif17
+  },
+  {
+    id: 2,
+    title: 'Vorbereitung auf deinen ersten Tattoo-Termin',
+    date: '02. Juni 2024',
+    excerpt: 'Du hast deinen ersten Termin bei mir? So bereitest du dich perfekt darauf vor und nimmst dir die Aufregung.',
+    content: 'Der erste Tattoo-Termin ist immer etwas ganz Besonderes. Die Aufregung ist meist groß, aber keine Sorge: Ich nehme mir viel Zeit für dich. \n\nWichtig ist, dass du gut ausgeschlafen bist und vorher ausreichend gegessen hast. Bring dir gerne einen kleinen Snack mit und vermeide Alkohol oder blutverdünnende Medikamente in den Tagen davor...',
+    image: vif18
+  },
+  {
+    id: 3,
+    title: 'Pflege danach: So bleibt die Farbe schön',
+    date: '20. Juni 2024',
+    excerpt: 'Die richtige Pflege in den ersten Wochen entscheidet über das Endergebnis deines Tattoos. Meine besten Tipps.',
+    content: 'Dein neues Tattoo ist wie eine kleine Wunde, die gut versorgt werden möchte. Nach dem Termin bekommst du von mir eine spezielle Folie und eine Pflegeanleitung. \n\nIn den ersten Tagen heißt es: Finger weg, nicht kratzen! Zweimal täglich sanft waschen und dünn eincremen reicht völlig aus, damit dein Tattoo perfekt abheilt...',
+    image: vif19
+  }
+];
+
+function Blog() {
+  return (
+    <div className="py-24 px-6 md:px-12 bg-boho-cream min-h-screen">
+      <div className="max-w-7xl mx-auto">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-3xl md:text-5xl font-light mb-6 tracking-wide">
+            <T i18nKey="nav.blog" />
+          </h2>
+          <div className="w-16 h-px bg-boho-gold mx-auto"></div>
+        </motion.div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
+          {blogPosts.map((post, i) => (
+            <motion.div 
+              key={post.id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: i * 0.1 }}
+              className="bg-white rounded-2xl shadow-sm border border-boho-dark/5 overflow-hidden group hover:shadow-md transition-shadow"
+            >
+              <Link to={`/blog/${post.id}`}>
+                <div className="aspect-[4/3] overflow-hidden">
+                  <img 
+                    src={post.image} 
+                    alt={post.title} 
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
+                  />
+                </div>
+                <div className="p-8">
+                  <p className="text-sm text-boho-dark/50 mb-3 tracking-widest uppercase">{post.date}</p>
+                  <h3 className="text-xl font-medium mb-4 group-hover:text-boho-gold transition-colors">{post.title}</h3>
+                  <p className="text-boho-dark/70 font-light leading-relaxed mb-6">
+                    {post.excerpt}
+                  </p>
+                  <span className="inline-flex items-center text-sm uppercase tracking-widest text-boho-dark group-hover:text-boho-gold transition-colors">
+                    Weiterlesen <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                  </span>
+                </div>
+              </Link>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function BlogPost() {
+  const { id } = useParams<{ id: string }>();
+  const post = blogPosts.find(p => p.id === Number(id));
+
+  if (!post) {
+    return <NotFound />;
+  }
+
+  return (
+    <div className="py-24 px-6 md:px-12 bg-boho-cream min-h-screen">
+      <div className="max-w-3xl mx-auto">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="mb-12"
+        >
+          <Link to="/blog" className="inline-flex items-center text-sm uppercase tracking-widest text-boho-dark/60 hover:text-boho-dark transition-colors mb-8">
+            <ChevronLeft className="w-4 h-4 mr-2" /> Zurück zum Blog
+          </Link>
+          <p className="text-sm text-boho-gold mb-4 tracking-widest uppercase">{post.date}</p>
+          <h1 className="text-3xl md:text-5xl font-light mb-8 tracking-wide leading-tight">
+            {post.title}
+          </h1>
+          <img 
+            src={post.image} 
+            alt={post.title} 
+            className="w-full aspect-[21/9] object-cover rounded-2xl shadow-sm mb-12"
+          />
+          <div className="prose prose-lg prose-boho max-w-none text-boho-dark/80 font-light leading-loose whitespace-pre-line">
+            {post.content}
+          </div>
+        </motion.div>
+      </div>
+    </div>
   );
 }
 
