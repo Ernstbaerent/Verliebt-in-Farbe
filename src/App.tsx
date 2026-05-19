@@ -4,7 +4,7 @@
  */
 
 import { useState, useEffect } from 'react';
-import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Link, Navigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import { Heart, Sparkles, ShieldCheck, ArrowRight, Instagram, Mail, MapPin, X, ChevronLeft, ChevronRight, Moon, Sun, Menu, UploadCloud } from 'lucide-react';
 
@@ -34,6 +34,16 @@ import vifLogo from './assets/images/vif-logo1.png';
 
 import { LanguageProvider, useLanguage, T } from './i18n';
 
+function Home() {
+  return (
+    <>
+      <Hero />
+      <Atmosphere />
+      <GallerySnippet />
+    </>
+  );
+}
+
 export default function App() {
   return (
     <LanguageProvider>
@@ -42,13 +52,8 @@ export default function App() {
           <Navbar />
           <main className="flex-grow">
             <Routes>
-              <Route path="/" element={
-                <>
-                  <Hero />
-                  <Atmosphere />
-                  <GallerySnippet />
-                </>
-              } />
+              <Route path="/" element={<Home />} />
+              <Route path="/home" element={<Home />} />
               <Route path="/about" element={<About />} />
               <Route path="/gallery" element={<Gallery />} />
               <Route path="/impressum" element={<Impressum />} />
