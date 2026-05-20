@@ -4,7 +4,7 @@
  */
 
 import { useState, useEffect } from 'react';
-import { HashRouter, Routes, Route, Link, Navigate, useParams } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Link, Navigate, useParams } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import { Heart, Sparkles, ShieldCheck, ArrowRight, Instagram, Mail, MapPin, X, ChevronLeft, ChevronRight, Moon, Sun, Menu, UploadCloud } from 'lucide-react';
 
@@ -47,7 +47,7 @@ function Home() {
 export default function App() {
   return (
     <LanguageProvider>
-      <HashRouter>
+      <BrowserRouter>
         <div className="min-h-screen bg-boho-cream text-boho-dark font-sans selection:bg-boho-rose selection:text-boho-dark flex flex-col">
           <Navbar />
           <main className="flex-grow">
@@ -68,7 +68,7 @@ export default function App() {
           <Footer />
           <CookieBanner />
         </div>
-      </HashRouter>
+      </BrowserRouter>
     </LanguageProvider>
   );
 }
