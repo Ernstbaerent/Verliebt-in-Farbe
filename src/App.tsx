@@ -58,6 +58,7 @@ export default function App() {
               <Route path="/gallery" element={<Gallery />} />
               <Route path="/blog" element={<Blog />} />
               <Route path="/blog/:id" element={<BlogPost />} />
+              <Route path="/termin-buchen" element={<Booking />} />
               <Route path="/impressum" element={<Impressum />} />
               <Route path="/datenschutz" element={<Datenschutz />} />
               <Route path="/kontakt" element={<ContactPage />} />
@@ -273,7 +274,7 @@ function Navbar() {
           <Link to="/gallery" className="hover:text-boho-gold transition-colors"><T i18nKey="nav.gallery" /></Link>
           <Link to="/blog" className="hover:text-boho-gold transition-colors"><T i18nKey="nav.blog" /></Link>
           <Link to="/kontakt" className="hover:text-boho-gold transition-colors"><T i18nKey="nav.contact" /></Link>
-          <a href="#" className="hover:text-boho-gold transition-colors"><T i18nKey="nav.booking" /></a>
+          <Link to="/termin-buchen" className="hover:text-boho-gold transition-colors"><T i18nKey="nav.booking" /></Link>
         </div>
 
         {/* Mobile Menu Button */}
@@ -302,7 +303,7 @@ function Navbar() {
               <Link to="/gallery" onClick={() => setIsMobileMenuOpen(false)} className="text-boho-dark hover:text-boho-gold transition-colors text-sm uppercase tracking-widest font-light"><T i18nKey="nav.gallery" /></Link>
               <Link to="/blog" onClick={() => setIsMobileMenuOpen(false)} className="text-boho-dark hover:text-boho-gold transition-colors text-sm uppercase tracking-widest font-light"><T i18nKey="nav.blog" /></Link>
               <Link to="/kontakt" onClick={() => setIsMobileMenuOpen(false)} className="text-boho-dark hover:text-boho-gold transition-colors text-sm uppercase tracking-widest font-light"><T i18nKey="nav.contact" /></Link>
-              <a href="#" onClick={() => setIsMobileMenuOpen(false)} className="text-boho-dark hover:text-boho-gold transition-colors text-sm uppercase tracking-widest font-light"><T i18nKey="nav.booking" /></a>
+              <Link to="/termin-buchen" onClick={() => setIsMobileMenuOpen(false)} className="text-boho-dark hover:text-boho-gold transition-colors text-sm uppercase tracking-widest font-light"><T i18nKey="nav.booking" /></Link>
             </motion.div>
           )}
         </AnimatePresence>
@@ -1308,6 +1309,41 @@ function BlogPost() {
           <div className="prose prose-lg prose-boho max-w-none text-boho-dark/80 font-light leading-loose whitespace-pre-line">
             {post.content}
           </div>
+        </motion.div>
+      </div>
+    </div>
+  );
+}
+
+function Booking() {
+  return (
+    <div className="py-24 px-6 md:px-12 bg-boho-cream min-h-screen">
+      <div className="max-w-4xl mx-auto">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-3xl md:text-5xl font-light mb-6 tracking-wide">
+            <T i18nKey="nav.booking" />
+          </h2>
+          <div className="w-16 h-px bg-boho-gold mx-auto mb-8"></div>
+          <p className="text-lg md:text-xl font-light text-boho-dark/80 leading-relaxed max-w-2xl mx-auto">
+            Dein Weg zum Wunsch-Tattoo. Wähle unten deinen passenden Termin aus. Um den Prozess so einfach wie möglich zu machen, läuft die Terminvergabe direkt über unseren Kalender. Bitte beschreibe dein Motiv direkt bei der Buchung. Deine Referenzbilder kannst du uns danach ganz bequem schicken, indem du einfach auf die automatische Terminbestätigung in deinem E-Mail-Postfach antwortest.
+          </p>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.2 }}
+          className="w-full max-w-4xl mx-auto h-[750px] rounded-xl shadow-md overflow-hidden bg-white"
+        >
+          <iframe 
+            src="https://calendar.app.google/XFroCF3YMjrh5LRd7"
+            className="w-full h-full border-0"
+            title="Terminbuchung"
+          />
         </motion.div>
       </div>
     </div>
