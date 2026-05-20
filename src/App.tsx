@@ -34,6 +34,7 @@ import vifLogo from './assets/images/vif-logo1.png';
 
 import { LanguageProvider, useLanguage, T } from './i18n';
 import ScrollToTop from './ScrollToTop';
+import SeoLandingpage from './SeoLandingpage';
 
 function Home() {
   return (
@@ -64,6 +65,7 @@ export default function App() {
               <Route path="/impressum" element={<Impressum />} />
               <Route path="/datenschutz" element={<Datenschutz />} />
               <Route path="/kontakt" element={<ContactPage />} />
+              <Route path="/:slug" element={<SeoLandingpage />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </main>
