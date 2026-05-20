@@ -33,6 +33,7 @@ import vif19 from './assets/images/VIF19.jpeg';
 import vifLogo from './assets/images/vif-logo1.png';
 
 import { LanguageProvider, useLanguage, T } from './i18n';
+import ScrollToTop from './ScrollToTop';
 
 function Home() {
   return (
@@ -48,6 +49,7 @@ export default function App() {
   return (
     <LanguageProvider>
       <BrowserRouter>
+        <ScrollToTop />
         <div className="min-h-screen bg-boho-cream text-boho-dark font-sans selection:bg-boho-rose selection:text-boho-dark flex flex-col">
           <Navbar />
           <main className="flex-grow">
