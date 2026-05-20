@@ -254,7 +254,15 @@ function Navbar() {
         {/* Logo & Social */}
         <div className="flex items-center space-x-4 md:space-x-4">
           <Link to="/" className="group" onClick={() => setIsMobileMenuOpen(false)}>
-            <img src={vifLogo} alt="Verliebt in Farbe - Fineline Tattoo Studio Logo" width="64" height="64" className="h-14 md:h-16 w-auto object-contain rounded-full shadow-md dark:bg-white p-[2px] group-hover:scale-110 group-hover:rotate-[5deg] transition-all duration-300 ease-out" />
+            <img 
+              loading="lazy"
+              onLoad={(e) => e.currentTarget.classList.remove('opacity-0')}
+              src={vifLogo} 
+              alt="Verliebt in Farbe - Fineline Tattoo Studio Logo" 
+              width="64" 
+              height="64" 
+              className="h-14 md:h-16 w-auto object-contain rounded-full shadow-md dark:bg-white p-[2px] group-hover:scale-110 group-hover:rotate-[5deg] transition-all duration-700 ease-out opacity-0" 
+            />
           </Link>
           <a 
             href="https://www.instagram.com/verliebtinfarbe/" 
@@ -446,11 +454,13 @@ function Hero() {
         >
           {/* Hero Image: Ani */}
           <img 
+            loading="lazy"
+            onLoad={(e) => e.currentTarget.classList.remove('opacity-0')}
             src={heroImg} 
             alt="Ani in ihrem Tattoo Studio Verliebt in Farbe" 
             width="600"
             height="750"
-            className="w-full h-full object-cover object-center"
+            className="w-full h-full object-cover object-center transition-opacity duration-1000 ease-out opacity-0"
           />
           <div className="absolute inset-0 bg-boho-gold/10 mix-blend-overlay"></div>
         </motion.div>
@@ -589,14 +599,15 @@ function GallerySnippet() {
               {/* Innerer Rahmen, um jedem Bild denselben Hintergrund zu geben (z.B. object-contain für Freisteller) */}
               <div className="w-full h-full rounded-lg overflow-hidden border border-zinc-200 dark:border-zinc-700 relative bg-zinc-200 dark:bg-zinc-900 flex items-center justify-center">
                 <img 
+                  loading="lazy"
+                  onLoad={(e) => e.currentTarget.classList.remove('opacity-0')}
                   src={img.src} 
                   alt={img.alt}
                   aria-label={img.alt}
-                  loading="lazy"
                   width="320"
                   height="400"
                   /* object-cover nutzen wir für normale Bilder, falls sie freigestellt sind, hilft object-contain */
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-all duration-700 ease-out opacity-0"
                 />
                 <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                   <span className="bg-white/90 text-[#2d2d2d] px-4 py-2 text-sm uppercase tracking-wider rounded-full backdrop-blur-sm shadow-sm scale-90 group-hover:scale-100 transition-transform"><T i18nKey="works.view" /></span>
@@ -761,13 +772,14 @@ function Gallery() {
               aria-label={`Bild öffnen: ${img.alt}`}
             >
               <img 
+                loading="lazy"
+                onLoad={(e) => e.currentTarget.classList.remove('opacity-0')}
                 src={img.src} 
                 alt={img.alt}
                 aria-label={img.alt}
-                loading="lazy"
                 width="400"
                 height="500"
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                className="w-full h-full object-cover group-hover:scale-105 transition-all duration-700 ease-out opacity-0"
               />
               <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                 <span className="bg-white/90 text-[#2d2d2d] px-4 py-2 text-sm uppercase tracking-wider rounded-full backdrop-blur-sm shadow-sm scale-90 group-hover:scale-100 transition-transform"><T i18nKey="works.view" /></span>
@@ -1256,9 +1268,11 @@ function Blog() {
               <Link to={`/blog/${post.id}`}>
                 <div className="aspect-[4/3] overflow-hidden">
                   <img 
+                    loading="lazy"
+                    onLoad={(e) => e.currentTarget.classList.remove('opacity-0')}
                     src={post.image} 
                     alt={post.title} 
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-all duration-700 ease-out opacity-0"
                   />
                 </div>
                 <div className="p-8">
@@ -1304,9 +1318,11 @@ function BlogPost() {
             {post.title}
           </h1>
           <img 
+            loading="lazy"
+            onLoad={(e) => e.currentTarget.classList.remove('opacity-0')}
             src={post.image} 
             alt={post.title} 
-            className="w-full aspect-[21/9] object-cover rounded-2xl shadow-sm mb-12"
+            className="w-full aspect-[21/9] object-cover rounded-2xl shadow-sm mb-12 transition-opacity duration-1000 ease-out opacity-0"
           />
           <div className="prose prose-lg prose-boho max-w-none text-boho-dark/80 font-light leading-loose whitespace-pre-line">
             {post.content}
