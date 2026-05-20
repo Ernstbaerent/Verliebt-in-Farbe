@@ -402,9 +402,9 @@ function About() {
               <T i18nKey="about.box.desc" />
             </p>
           </div>
-          <button className="whitespace-nowrap px-6 py-3 bg-boho-gold text-[#2d2d2d] rounded-sm hover:bg-boho-dark hover:text-boho-cream transition-colors tracking-widest text-sm uppercase">
+          <Link to="/termin-buchen" className="whitespace-nowrap px-6 py-3 bg-boho-gold text-[#2d2d2d] rounded-sm hover:bg-boho-dark hover:text-boho-cream transition-colors tracking-widest text-sm uppercase">
             <T i18nKey="about.box.btn" />
-          </button>
+          </Link>
         </div>
       </div>
     </motion.section>
@@ -437,10 +437,10 @@ function Hero() {
             <T i18nKey="hero.desc" />
           </p>
           <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-4 sm:space-y-0 sm:space-x-6">
-            <button className="px-8 py-4 bg-boho-dark text-boho-cream rounded-sm hover:bg-boho-gold hover:text-[#2d2d2d] transition-colors duration-300 tracking-wide font-light flex items-center group">
+            <Link to="/termin-buchen" className="px-8 py-4 bg-boho-dark text-boho-cream rounded-sm hover:bg-boho-gold hover:text-[#2d2d2d] transition-colors duration-300 tracking-wide font-light flex items-center group">
               <T i18nKey="hero.btn" />
               <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
-            </button>
+            </Link>
             <Link to="/gallery" className="text-sm uppercase tracking-widest text-boho-dark/60 hover:text-boho-dark transition-colors border-b border-transparent hover:border-boho-dark pb-1">
               <T i18nKey="hero.gallery" />
             </Link>
@@ -1179,9 +1179,9 @@ function Footer() {
             <p className="font-light text-boho-cream/70 max-w-md mb-8">
               <T i18nKey="footer.desc" />
             </p>
-            <button className="px-8 py-4 bg-boho-gold text-[#2d2d2d] rounded-sm hover:bg-boho-cream hover:text-boho-dark transition-colors duration-300 tracking-wide font-medium flex items-center">
+            <Link to="/termin-buchen" className="px-8 py-4 bg-boho-gold text-[#2d2d2d] rounded-sm hover:bg-boho-cream hover:text-boho-dark transition-colors duration-300 tracking-wide font-medium flex items-center w-fit">
               <T i18nKey="footer.btn" />
-            </button>
+            </Link>
           </div>
           
           <div className="flex flex-col md:items-end space-y-6">
