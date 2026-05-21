@@ -1066,6 +1066,7 @@ function Impressum() {
 
 function ContactPage() {
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
+  const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -1086,6 +1087,7 @@ function ContactPage() {
       
       if (response.ok) {
         setStatus('success');
+        setIsSuccessModalOpen(true);
         form.reset();
       } else {
         setStatus('error');
@@ -1168,11 +1170,6 @@ function ContactPage() {
           </div>
           
           <div className="pt-6 text-center flex flex-col items-center">
-            {status === 'success' && (
-              <div className="mb-4 text-boho-sage font-medium bg-boho-sage/10 px-6 py-3 rounded-sm">
-                Deine Nachricht wurde erfolgreich gesendet!
-              </div>
-            )}
             {status === 'error' && (
               <div className="mb-4 text-red-500 font-medium bg-red-500/10 px-6 py-3 rounded-sm">
                 Es gab einen Fehler beim Senden. Bitte versuche es später noch einmal.
@@ -1189,6 +1186,54 @@ function ContactPage() {
           </div>
         </form>
       </div>
+
+      <AnimatePresence>
+        {isSuccessModalOpen && (
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-6 bg-boho-dark/40 backdrop-blur-md"
+            onClick={() => setIsSuccessModalOpen(false)}
+          >
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              transition={{ type: "spring", stiffness: 300, damping: 30 }}
+              className="bg-boho-cream w-full max-w-lg rounded-2xl p-8 md:p-12 relative shadow-2xl text-center border border-boho-gold/20"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button 
+                onClick={() => setIsSuccessModalOpen(false)}
+                className="absolute top-6 right-6 text-boho-dark/50 hover:text-boho-dark transition-colors p-2"
+                aria-label="Schließen"
+              >
+                <X className="w-5 h-5" />
+              </button>
+              
+              <div className="w-20 h-20 bg-boho-sage/20 rounded-full flex items-center justify-center mx-auto mb-8 border border-boho-sage">
+                <Heart className="w-8 h-8 text-boho-sage" />
+              </div>
+              
+              <h3 className="font-serif text-3xl md:text-3xl lg:text-4xl text-boho-dark mb-4 leading-tight">
+                <T i18nKey="contact.success.title" />
+              </h3>
+              
+              <p className="text-boho-dark/70 font-light text-lg mb-10 leading-relaxed">
+                <T i18nKey="contact.success.desc" />
+              </p>
+              
+              <button 
+                onClick={() => setIsSuccessModalOpen(false)}
+                className="w-full inline-flex items-center justify-center px-8 py-4 bg-boho-dark text-boho-cream rounded-sm hover:bg-boho-gold hover:text-boho-dark transition-colors duration-300 tracking-widest font-medium uppercase text-sm"
+              >
+                <T i18nKey="contact.success.close" />
+              </button>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.section>
   );
 }

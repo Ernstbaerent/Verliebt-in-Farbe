@@ -112,6 +112,9 @@ export const translations: TranslationDictionary = {
   'contact.privacy': { de: 'Ich willige ein, dass meine Daten ausschließlich zur Bearbeitung der Anfrage verarbeitet werden (Siehe ', en: 'I agree that my data will be processed exclusively for the processing of the request (See ' },
   'contact.privacyLink': { de: 'Datenschutzerklärung', en: 'Privacy Policy' },
   'contact.privacyEnd': { de: ').', en: ').' },
+  'contact.success.title': { de: 'Du hast deine Anfrage erfolgreich gesendet!', en: 'Your request has been successfully sent!' },
+  'contact.success.desc': { de: 'Wir melden uns so schnell wie möglich bei dir.', en: 'We will get back to you as soon as possible.' },
+  'contact.success.close': { de: 'Schließen', en: 'Close' },
   'contact.submit': { de: 'Anfrage senden', en: 'Send Request' },
 
   'notfound.title': { de: '404', en: '404' },
