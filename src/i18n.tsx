@@ -28,8 +28,8 @@ export const translations: TranslationDictionary = {
   'cookie.accept': { de: 'Alle akzeptieren', en: 'Accept all' },
   
   'hero.badge': { de: 'Fineline & Mandalas', en: 'Fineline & Mandalas' },
-  'hero.title.1': { de: 'Sanfte Kunst,', en: 'Gentle art,' },
-  'hero.title.2': { de: 'die unter die Haut geht.', en: 'beneath your skin.' },
+  'hero.title.1': { de: 'Verliebt in Farbe –', en: 'Verliebt in Farbe –' },
+  'hero.title.2': { de: 'Dein Tattoostudio in Greiz', en: 'Your Tattoo Studio in Greiz' },
   'hero.desc': { 
     de: 'Feine Linien, florale Mandalas und ein liebevoll gestalteter Raum, in dem du dich rundum wohlfühlen kannst. Dein Körper, deine Geschichte, verewigt in zarter Farbe.', 
     en: 'Fine lines, floral mandalas and a lovingly designed space where you can feel completely comfortable. Your body, your story, immortalized in delicate color.' 
