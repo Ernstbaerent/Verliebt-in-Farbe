@@ -6,7 +6,7 @@
 import { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Link, Navigate, useParams } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
-import { Heart, Sparkles, ShieldCheck, ArrowRight, Instagram, Mail, MapPin, X, ChevronLeft, ChevronRight, Moon, Sun, Menu, UploadCloud } from 'lucide-react';
+import { Heart, Sparkles, ShieldCheck, ArrowRight, Instagram, Mail, MapPin, X, ChevronLeft, ChevronRight, Moon, Sun, Menu } from 'lucide-react';
 
 import heroImg from './assets/images/Ani1.jpeg';
 import ani2 from './assets/images/Ani2.jpeg';
@@ -51,7 +51,7 @@ export default function App() {
     <LanguageProvider>
       <BrowserRouter>
         <ScrollToTop />
-        <div className="min-h-screen bg-boho-cream text-boho-dark font-sans selection:bg-boho-rose selection:text-boho-dark flex flex-col">
+        <div className="min-h-screen bg-boho-cream text-boho-dark font-sans selection:bg-boho-rose selection:text-boho-dark flex flex-col transition-colors duration-500">
           <Navbar />
           <main className="flex-grow">
             <Routes>
@@ -139,7 +139,7 @@ function DarkModeToggle() {
   const [isHovered, setIsHovered] = useState(false);
 
   useEffect(() => {
-    // Check local storage or time of day
+    // Check local storage or system preference
     const storedPreference = localStorage.getItem('theme');
     if (storedPreference) {
       if (storedPreference === 'dark') {
@@ -150,11 +150,14 @@ function DarkModeToggle() {
         document.documentElement.classList.remove('dark');
       }
     } else {
-      // Adjust based on time of day (e.g. dark from 20:00 to 06:00)
-      const hour = new Date().getHours();
-      if (hour >= 20 || hour < 6) {
+      // Adjust based on system preference (prefers-color-scheme)
+      const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (prefersDark) {
         setIsDark(true);
         document.documentElement.classList.add('dark');
+      } else {
+        setIsDark(false);
+        document.documentElement.classList.remove('dark');
       }
     }
   }, []);
@@ -864,20 +867,20 @@ function Datenschutz() {
     window.scrollTo(0, 0);
   }, []);
 
-  const heading2 = "font-serif text-2xl md:text-3xl text-boho-dark dark:text-boho-cream mt-12 mb-6";
-  const heading3 = "font-serif text-xl md:text-2xl text-boho-dark dark:text-boho-cream mt-8 mb-4";
-  const heading4 = "font-semibold text-lg text-boho-dark dark:text-boho-cream mt-6 mb-3";
-  const paragraph = "font-light text-boho-dark/80 dark:text-boho-cream/80 leading-relaxed mb-4";
+  const heading2 = "font-serif text-2xl md:text-3xl text-boho-dark mt-12 mb-6";
+  const heading3 = "font-serif text-xl md:text-2xl text-boho-dark mt-8 mb-4";
+  const heading4 = "font-semibold text-lg text-boho-dark mt-6 mb-3";
+  const paragraph = "font-light text-boho-dark/80 leading-relaxed mb-4";
 
   return (
     <motion.section 
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="py-16 md:py-24 bg-boho-cream dark:bg-[#1f1a18] min-h-screen transition-colors duration-500"
+      className="py-16 md:py-24 bg-boho-cream min-h-screen transition-colors duration-500"
     >
       <div className="max-w-4xl mx-auto px-6 md:px-12">
-        <h1 className="font-serif text-4xl md:text-5xl lg:text-5xl mb-12 text-boho-dark dark:text-boho-cream">
+        <h1 className="font-serif text-4xl md:text-5xl lg:text-5xl mb-12 text-boho-dark">
           Datenschutzerklärung
         </h1>
         <div className="text-lg">
@@ -954,7 +957,7 @@ function Datenschutz() {
 
           <h3 className={heading3}>Recht auf Einschränkung der Verarbeitung</h3>
           <p className={paragraph}>Sie haben das Recht, die Einschränkung der Verarbeitung Ihrer personenbezogenen Daten zu verlangen. Hierzu können Sie sich jederzeit an uns wenden. Das Recht auf Einschränkung der Verarbeitung besteht in folgenden Fällen:</p>
-          <ul className="list-disc pl-6 mb-4 space-y-2 text-boho-dark/80 dark:text-boho-cream/80 font-light leading-relaxed">
+          <ul className="list-disc pl-6 mb-4 space-y-2 text-boho-dark/80 font-light leading-relaxed">
             <li>Wenn Sie die Richtigkeit Ihrer bei uns gespeicherten personenbezogenen Daten bestreiten, benötigen wir in der Regel Zeit, um dies zu überprüfen. Für die Dauer der Prüfung haben Sie das Recht, die Einschränkung der Verarbeitung Ihrer personenbezogenen Daten zu verlangen.</li>
             <li>Wenn die Verarbeitung Ihrer personenbezogenen Daten unrechtmäßig geschah/geschieht, können Sie statt der Löschung die Einschränkung der Datenverarbeitung verlangen.</li>
             <li>Wenn wir Ihre personenbezogenen Daten nicht mehr benötigen, Sie sie jedoch zur Ausübung, Verteidigung oder Geltendmachung von Rechtsansprüchen benötigen, haben Sie das Recht, statt der Löschung die Einschränkung der Verarbeitung Ihrer personenbezogenen Daten zu verlangen.</li>
@@ -1009,18 +1012,18 @@ function Impressum() {
     window.scrollTo(0, 0);
   }, []);
 
-  const heading2 = "font-serif text-2xl md:text-3xl text-boho-dark dark:text-boho-cream mt-12 mb-6";
-  const paragraph = "font-light text-boho-dark/80 dark:text-boho-cream/80 leading-relaxed mb-4";
+  const heading2 = "font-serif text-2xl md:text-3xl text-boho-dark mt-12 mb-6";
+  const paragraph = "font-light text-boho-dark/80 leading-relaxed mb-4";
 
   return (
     <motion.section 
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="py-16 md:py-24 bg-boho-cream dark:bg-[#1f1a18] min-h-screen transition-colors duration-500"
+      className="py-16 md:py-24 bg-boho-cream min-h-screen transition-colors duration-500"
     >
       <div className="max-w-4xl mx-auto px-6 md:px-12">
-        <h1 className="font-serif text-4xl md:text-5xl lg:text-5xl mb-12 text-boho-dark dark:text-boho-cream">
+        <h1 className="font-serif text-4xl md:text-5xl lg:text-5xl mb-12 text-boho-dark">
           Impressum
         </h1>
         <div className="text-lg">
@@ -1062,6 +1065,36 @@ function Impressum() {
 }
 
 function ContactPage() {
+  const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setStatus('submitting');
+    
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+    
+    try {
+      // Placeholder Formspree Endpoint, replace with real ID
+      const response = await fetch('https://formspree.io/f/xredpvol', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json'
+        },
+        body: formData
+      });
+      
+      if (response.ok) {
+        setStatus('success');
+        form.reset();
+      } else {
+        setStatus('error');
+      }
+    } catch (error) {
+      setStatus('error');
+    }
+  };
+
   return (
     <motion.section 
       initial={{ opacity: 0 }}
@@ -1079,15 +1112,16 @@ function ContactPage() {
           </p>
         </div>
         
-        <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
+        <form className="space-y-6" onSubmit={handleSubmit}>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
               <label htmlFor="name" className="block text-sm font-light text-boho-dark/80 mb-2 uppercase tracking-widest"><T i18nKey="contact.name" /></label>
               <input 
                 type="text" 
                 id="name" 
+                name="name"
                 required 
-                className="w-full bg-boho-cream dark:bg-black/20 border border-boho-dark/10 dark:border-white/10 rounded-sm px-4 py-3 text-boho-dark focus:border-boho-sage dark:focus:border-boho-cream transition-colors duration-300"
+                className="w-full bg-boho-cream border border-boho-dark/10 rounded-sm px-4 py-3 text-boho-dark focus:border-boho-sage transition-colors duration-300"
                 aria-label="Name"
               />
             </div>
@@ -1096,8 +1130,9 @@ function ContactPage() {
               <input 
                 type="email" 
                 id="email" 
+                name="email"
                 required 
-                className="w-full bg-boho-cream dark:bg-black/20 border border-boho-dark/10 dark:border-white/10 rounded-sm px-4 py-3 text-boho-dark focus:border-boho-sage dark:focus:border-boho-cream transition-colors duration-300"
+                className="w-full bg-boho-cream border border-boho-dark/10 rounded-sm px-4 py-3 text-boho-dark focus:border-boho-sage transition-colors duration-300"
                 aria-label="Email"
               />
             </div>
@@ -1107,44 +1142,21 @@ function ContactPage() {
             <label htmlFor="message" className="block text-sm font-light text-boho-dark/80 mb-2 uppercase tracking-widest"><T i18nKey="contact.message" /></label>
             <textarea 
               id="message" 
+              name="message"
               required 
               rows={5}
-              className="w-full bg-boho-cream dark:bg-black/20 border border-boho-dark/10 dark:border-white/10 rounded-sm px-4 py-3 text-boho-dark focus:border-boho-sage dark:focus:border-boho-cream transition-colors duration-300 resize-y"
+              className="w-full bg-boho-cream border border-boho-dark/10 rounded-sm px-4 py-3 text-boho-dark focus:border-boho-sage transition-colors duration-300 resize-y"
               aria-label="Nachricht"
             ></textarea>
           </div>
 
-          <div>
-            <label className="block text-sm font-light text-boho-dark/80 mb-2 uppercase tracking-widest" id="upload-label">Bilder hochladen</label>
-            <div 
-              className="mt-2 flex justify-center rounded-lg border-2 border-dashed border-boho-sage hover:border-boho-gold transition-colors px-6 py-10 cursor-pointer relative"
-              aria-labelledby="upload-label"
-              role="button"
-              tabIndex={0}
-              aria-label="Dateien hochladen (Drag & Drop fähig)"
-            >
-              <div className="text-center">
-                <UploadCloud className="mx-auto h-12 w-12 text-boho-sage mb-4" />
-                <div className="mt-4 flex text-sm font-light text-boho-dark/80 max-w-sm text-center mx-auto leading-relaxed">
-                  <label
-                    htmlFor="file-upload"
-                    className="relative cursor-pointer rounded-md bg-transparent font-medium text-boho-gold hover:text-boho-dark focus-within:outline-none focus-within:ring-2 focus-within:ring-boho-sage focus-within:ring-offset-2 transition-colors mx-auto"
-                  >
-                    <span><T i18nKey="contact.upload" /></span>
-                    <input id="file-upload" name="file-upload" type="file" className="sr-only" multiple accept=".jpg,.jpeg,.png" />
-                  </label>
-                </div>
-              </div>
-            </div>
-          </div>
-          
           <div className="flex items-start gap-3 mt-4">
             <div className="flex items-center h-5 mt-1">
               <input 
                 id="privacy" 
                 type="checkbox" 
                 required
-                className="w-4 h-4 rounded-sm border-boho-dark/20 text-boho-sage focus:ring-boho-sage bg-boho-cream dark:bg-black/20 cursor-pointer"
+                className="w-4 h-4 rounded-sm border-boho-dark/20 text-boho-sage focus:ring-boho-sage bg-boho-cream cursor-pointer"
                 aria-label="Datenschutzerklärung zustimmen"
               />
             </div>
@@ -1155,12 +1167,24 @@ function ContactPage() {
             </label>
           </div>
           
-          <div className="pt-6 text-center">
+          <div className="pt-6 text-center flex flex-col items-center">
+            {status === 'success' && (
+              <div className="mb-4 text-boho-sage font-medium bg-boho-sage/10 px-6 py-3 rounded-sm">
+                Deine Nachricht wurde erfolgreich gesendet!
+              </div>
+            )}
+            {status === 'error' && (
+              <div className="mb-4 text-red-500 font-medium bg-red-500/10 px-6 py-3 rounded-sm">
+                Es gab einen Fehler beim Senden. Bitte versuche es später noch einmal.
+              </div>
+            )}
+            
             <button 
               type="submit" 
-              className="inline-flex items-center justify-center px-10 py-4 bg-boho-sage text-boho-dark rounded-sm hover:bg-boho-dark hover:text-boho-cream transition-colors duration-300 tracking-widest font-medium uppercase text-sm group w-full md:w-auto"
+              disabled={status === 'submitting'}
+              className="inline-flex items-center justify-center px-10 py-4 bg-boho-sage text-boho-dark rounded-sm hover:bg-boho-dark hover:text-boho-cream transition-colors duration-300 tracking-widest font-medium uppercase text-sm group w-full md:w-auto disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              <T i18nKey="contact.submit" />
+              {status === 'submitting' ? 'Wird gesendet...' : <T i18nKey="contact.submit" />}
             </button>
           </div>
         </form>
