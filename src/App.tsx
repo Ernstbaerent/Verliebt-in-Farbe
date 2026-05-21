@@ -513,13 +513,16 @@ function Atmosphere() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: idx * 0.1, duration: 0.6 }}
-              className="flex flex-col items-center text-center p-8 bg-white/50 border border-boho-beige rounded-2xl hover:bg-white transition-colors shadow-sm shadow-boho-beige/50"
+              className="group relative flex flex-col items-center text-center p-8 bg-boho-cream/70 border border-boho-beige rounded-2xl hover:scale-105 transition-all duration-300 drop-shadow-sm hover:drop-shadow-lg overflow-hidden"
             >
-              <div className="w-14 h-14 rounded-full bg-boho-rose/30 flex items-center justify-center mb-6">
+              {/* Shiny effect overlay */}
+              <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-boho-gold/20 to-transparent group-hover:animate-shimmer pointer-events-none" />
+              
+              <div className="w-14 h-14 z-10 rounded-full bg-boho-rose/30 flex items-center justify-center mb-6 transition-transform duration-300 group-hover:scale-110">
                 {val.icon}
               </div>
-              <h3 className="font-serif text-xl mb-3">{val.title}</h3>
-              <p className="text-sm font-light text-boho-dark/70 leading-relaxed">
+              <h3 className="font-serif text-xl mb-3 text-boho-dark z-10">{val.title}</h3>
+              <p className="text-sm font-light text-boho-dark/70 leading-relaxed z-10">
                 {val.description}
               </p>
             </motion.div>

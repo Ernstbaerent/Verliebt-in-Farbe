@@ -64,6 +64,14 @@
   100% { background-position: 0% 50%; }
 }
 
+@keyframes shimmer {
+  100% { transform: translateX(100%); }
+}
+
+@utility animate-shimmer {
+  animation: shimmer 1.5s ease-in-out infinite;
+}
+
 @utility bg-glitter-rainbow {
   background: linear-gradient(124deg, var(--color-rainbow-1), var(--color-rainbow-2), var(--color-rainbow-3), var(--color-rainbow-4), var(--color-rainbow-5));
   background-size: 400% 400%;
