@@ -36,6 +36,8 @@ import { LanguageProvider, useLanguage, T } from './i18n';
 import ScrollToTop from './ScrollToTop';
 import SeoLandingpage from './SeoLandingpage';
 
+import ChatbotWidget from './components/ChatbotWidget';
+
 function Home() {
   return (
     <>
@@ -71,6 +73,7 @@ export default function App() {
           </main>
           <Footer />
           <CookieBanner />
+          <ChatbotWidget />
         </div>
       </BrowserRouter>
     </LanguageProvider>
