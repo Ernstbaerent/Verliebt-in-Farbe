@@ -34,29 +34,54 @@ export default function ChatbotWidget() {
     return () => clearTimeout(timer);
   }, [isOpen]);
 
-  const handleSendMessage = (e: React.FormEvent) => {
+  const handleSendMessage = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!inputValue.trim()) return;
 
+    const userText = inputValue.trim();
     const userMessage: Message = {
       id: Date.now().toString(),
       sender: 'user',
-      text: inputValue.trim(),
+      text: userText,
     };
 
     setMessages((prev) => [...prev, userMessage]);
     setInputValue('');
     setIsTyping(true);
 
-    setTimeout(() => {
-      setIsTyping(false);
+    try {
+      const response = await fetch('https://anichatbotproxy.clemens-f91.workers.dev/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ userMessage: userText }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      const data = await response.json();
+      
       const botMessage: Message = {
         id: (Date.now() + 1).toString(),
         sender: 'ani',
-        text: 'Hey! Ich bin Anis digitaler Assistent. Mein KI-Gehirn wird gerade noch verkabelt, aber bald beantworte ich hier alle deine Fragen!',
+        text: data.reply || "Oh, mein digitales Gehirn klemmt gerade etwas. Versuch es bitte gleich nochmal! 🌿",
       };
+      
       setMessages((prev) => [...prev, botMessage]);
-    }, 1000);
+    } catch (error) {
+      console.error("Chatbot error:", error);
+      const errorMessage: Message = {
+        id: (Date.now() + 1).toString(),
+        sender: 'ani',
+        text: "Oh, mein digitales Gehirn klemmt gerade etwas. Versuch es bitte gleich nochmal! 🌿",
+      };
+      setMessages((prev) => [...prev, errorMessage]);
+    } finally {
+      setIsTyping(false);
+    }
   };
 
   return (
