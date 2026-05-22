@@ -83,14 +83,5 @@ seoKeywords.forEach(keyword => {
   });
 });
 
-// Generate sitemap.xml
-const sitemapContent = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${sitemapUrls.map(url => `  <url>
-    <loc>${url}</loc>
-    <changefreq>weekly</changefreq>
-  </url>`).join('\n')}
-</urlset>`;
-
-fs.writeFileSync(path.join(distPath, 'sitemap.xml'), sitemapContent);
-console.log(`Generated SEO pages and sitemap.xml with ${sitemapUrls.length} entries.`);
+// Sitemap wird jetzt vorher durch generate-sitemap.js in /public geschrieben
+console.log(`Generated SEO pages entries.`);
