@@ -24,6 +24,31 @@ export default function SeoLandingpage() {
   const readableKeyword = formatSeoText(keyword);
   const readableLocation = formatSeoText(location);
 
+  const getVariationIndex = (str: string, max: number) => { 
+    return str.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0) % max; 
+  };
+
+  const h2Variations = [
+    `Deine Tätowiererin in der Nähe von ${readableLocation}`,
+    `Professionelles Tattoostudio für ${readableLocation}`,
+    `Dein Fineline Tattoo Artist nah bei ${readableLocation}`,
+    `Dein Studio für Fineline Tattoos nahe ${readableLocation}`,
+    `Individuelle Tattoo Kunst unweit von ${readableLocation}`
+  ];
+
+  const textVariations = [
+    `Du suchst einen kreativen Tätowierer oder eine spezialisierte Tattoo Artist in der Nähe von ${readableLocation}? Das Tattoostudio 'Verliebt in Farbe' in Greiz ist dein Ansprechpartner für feine Linien und individuelle Designs. Nur einen kurzen Weg von ${readableLocation} entfernt, bietet dir Ani einen Raum für kunstvolle Tattoos in einer entspannten Umgebung.`,
+    `Aus ${readableLocation} auf der Suche nach dem passenden Tattoostudio? Bei 'Verliebt in Farbe' in Greiz erwartet dich eine erfahrene Tätowiererin für minimalistische Kunst und florale Motive. Komm aus ${readableLocation} vorbei und lass uns gemeinsam dein nächstes Fineline Tattoo planen.`,
+    `Als Tattoo Artist nahe ${readableLocation} habe ich mich voll und ganz feinen Linien, sanften Schatten und individuellen Designs verschrieben. Im Tattoostudio 'Verliebt in Farbe' unweit von ${readableLocation} stehst du und dein Wunsch immer im Mittelpunkt – für ein Tattoo, das so einzigartig ist wie du.`,
+    `Wenn du aus ${readableLocation} kommst und auf der Suche nach einem Tattoostudio bist, das auf Fineline spezialisiert ist, bist du hier richtig. Dein Tattoostudio in der Nähe von ${readableLocation}, in dem deine Ideen mit höchster Präzision und viel Liebe zum Detail als Tattoo verewigt werden.`
+  ];
+
+  const h2Index = isValid ? getVariationIndex(slug || '', h2Variations.length) : 0;
+  const textIndex = isValid ? getVariationIndex((slug || '') + "_text", textVariations.length) : 0;
+
+  const dynamicH2 = h2Variations[h2Index];
+  const dynamicText = textVariations[textIndex];
+
   useEffect(() => {
     if (isValid) {
       document.title = `${readableKeyword} in ${readableLocation} | Verliebt in Farbe`;
@@ -109,8 +134,20 @@ export default function SeoLandingpage() {
         </div>
       </section>
 
+      {/* Dynamic SEO Section */}
+      <section className="py-20 px-6 md:px-12 bg-white">
+        <div className="max-w-3xl mx-auto text-center">
+          <h2 className="font-serif text-3xl md:text-4xl mb-8 text-boho-dark tracking-wide">
+            {dynamicH2}
+          </h2>
+          <p className="text-lg md:text-xl text-boho-dark/80 font-light leading-relaxed">
+            {dynamicText}
+          </p>
+        </div>
+      </section>
+
       {/* Why Choose Us */}
-      <section className="py-24 px-6 md:px-12 bg-white">
+      <section className="py-24 px-6 md:px-12 bg-boho-cream">
         <div className="max-w-4xl mx-auto">
           <div className="w-16 h-px bg-boho-gold mx-auto mb-12"></div>
           <h2 className="text-3xl md:text-4xl font-light text-center mb-16 tracking-wide">
@@ -118,7 +155,7 @@ export default function SeoLandingpage() {
           </h2>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-            <div className="bg-boho-cream p-10 rounded-2xl shadow-sm hover:shadow-md transition-shadow">
+            <div className="bg-white p-10 rounded-2xl shadow-sm hover:shadow-md transition-shadow">
               <Sparkles className="w-8 h-8 text-boho-gold mb-6" />
               <h3 className="text-xl font-medium mb-4">Fineline Expertise</h3>
               <p className="text-boho-dark/70 leading-relaxed font-light">
@@ -126,7 +163,7 @@ export default function SeoLandingpage() {
               </p>
             </div>
             
-            <div className="bg-boho-cream p-10 rounded-2xl shadow-sm hover:shadow-md transition-shadow">
+            <div className="bg-white p-10 rounded-2xl shadow-sm hover:shadow-md transition-shadow">
               <Heart className="w-8 h-8 text-boho-gold mb-6" />
               <h3 className="text-xl font-medium mb-4">Wohlfühlatmosphäre</h3>
               <p className="text-boho-dark/70 leading-relaxed font-light">
