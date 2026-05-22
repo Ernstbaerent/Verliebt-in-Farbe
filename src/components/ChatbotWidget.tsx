@@ -1,11 +1,11 @@
-import { useState, useRef, useEffect } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
-import { X, Send } from 'lucide-react';
-import AniAvatar from '../assets/images/Ani3.jpeg';
+import { useState, useRef, useEffect } from "react";
+import { motion, AnimatePresence } from "motion/react";
+import { X, Send } from "lucide-react";
+import AniAvatar from "../assets/images/Ani3.jpeg";
 
 type Message = {
   id: string;
-  sender: 'user' | 'ani';
+  sender: "user" | "ani";
   text: string;
 };
 
@@ -13,12 +13,12 @@ export default function ChatbotWidget() {
   const [isOpen, setIsOpen] = useState(false);
   const [showHint, setShowHint] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
-  const [inputValue, setInputValue] = useState('');
+  const [inputValue, setInputValue] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
   useEffect(() => {
@@ -41,41 +41,46 @@ export default function ChatbotWidget() {
     const userText = inputValue.trim();
     const userMessage: Message = {
       id: Date.now().toString(),
-      sender: 'user',
+      sender: "user",
       text: userText,
     };
 
     setMessages((prev) => [...prev, userMessage]);
-    setInputValue('');
+    setInputValue("");
     setIsTyping(true);
 
     try {
-      const response = await fetch('https://anichatbotproxy.clemens-f91.workers.dev/', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
+      const response = await fetch(
+        "https://anichatbotproxy.clemens-f91.workers.dev/",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ userMessage: userText }),
         },
-        body: JSON.stringify({ userMessage: userText }),
-      });
+      );
 
       if (!response.ok) {
-        throw new Error('Network response was not ok');
+        throw new Error("Network response was not ok");
       }
 
       const data = await response.json();
-      
+
       const botMessage: Message = {
         id: (Date.now() + 1).toString(),
-        sender: 'ani',
-        text: data.reply || "Oh, mein digitales Gehirn klemmt gerade etwas. Versuch es bitte gleich nochmal! 🌿",
+        sender: "ani",
+        text:
+          data.reply ||
+          "Oh, mein digitales Gehirn klemmt gerade etwas. Versuch es bitte gleich nochmal! 🌿",
       };
-      
+
       setMessages((prev) => [...prev, botMessage]);
     } catch (error) {
       console.error("Chatbot error:", error);
       const errorMessage: Message = {
         id: (Date.now() + 1).toString(),
-        sender: 'ani',
+        sender: "ani",
         text: "Oh, mein digitales Gehirn klemmt gerade etwas. Versuch es bitte gleich nochmal! 🌿",
       };
       setMessages((prev) => [...prev, errorMessage]);
@@ -94,7 +99,7 @@ export default function ChatbotWidget() {
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
             transition={{ duration: 0.2 }}
             className="absolute bottom-20 right-0 w-[350px] sm:w-[380px] bg-boho-cream border border-boho-dark/10 rounded-2xl shadow-2xl flex flex-col overflow-hidden"
-            style={{ maxHeight: 'calc(100vh - 120px)', height: '550px' }}
+            style={{ maxHeight: "calc(100vh - 120px)", height: "550px" }}
           >
             {/* Header */}
             <div className="bg-boho-dark text-boho-cream p-4 flex items-center justify-between">
@@ -105,8 +110,12 @@ export default function ChatbotWidget() {
                   className="w-10 h-10 rounded-full object-cover border border-boho-cream/20"
                 />
                 <div>
-                  <h3 className="font-serif text-lg leading-none mb-1">Chatte mit Ani</h3>
-                  <p className="text-xs font-light text-boho-cream/70">Digitale Assistenz</p>
+                  <h3 className="font-serif text-lg leading-none mb-1">
+                    Chatte mit Ani
+                  </h3>
+                  <p className="text-xs font-light text-boho-cream/70">
+                    Digitale Assistenz
+                  </p>
                 </div>
               </div>
               <button
@@ -123,38 +132,51 @@ export default function ChatbotWidget() {
               <div className="text-center text-xs text-boho-dark/40 my-4 uppercase tracking-widest">
                 Heute
               </div>
-              
+
               <div className="flex items-end gap-2">
-                <img src={AniAvatar} alt="Ani" className="w-6 h-6 rounded-full object-cover flex-shrink-0" />
-                <div className="bg-white border border-boho-dark/5 text-boho-dark rounded-2xl rounded-bl-sm px-4 py-3 max-w-[80%] shadow-sm">
-                  Hey! Hast du Fragen zu meinen Tattoos oder möchtest du einen Termin anfragen?
+                <img
+                  src={AniAvatar}
+                  alt="Ani"
+                  className="w-6 h-6 rounded-full object-cover flex-shrink-0"
+                />
+                <div className="bg-boho-beige border border-boho-dark/10 text-boho-dark rounded-2xl rounded-bl-sm px-4 py-3 max-w-[80%] shadow-sm">
+                  Hey! Hast du Fragen zu meinen Tattoos oder möchtest du einen
+                  Termin anfragen?
                 </div>
               </div>
 
               {messages.map((msg) => (
                 <div
                   key={msg.id}
-                  className={`flex items-end gap-2 ${msg.sender === 'user' ? 'justify-end' : ''}`}
+                  className={`flex items-end gap-2 ${msg.sender === "user" ? "justify-end" : ""}`}
                 >
-                  {msg.sender === 'ani' && (
-                    <img src={AniAvatar} alt="Ani" className="w-6 h-6 rounded-full object-cover flex-shrink-0" />
+                  {msg.sender === "ani" && (
+                    <img
+                      src={AniAvatar}
+                      alt="Ani"
+                      className="w-6 h-6 rounded-full object-cover flex-shrink-0"
+                    />
                   )}
                   <div
                     className={`px-4 py-3 max-w-[80%] shadow-sm ${
-                      msg.sender === 'user'
-                        ? 'bg-boho-sage text-boho-dark rounded-2xl rounded-br-sm'
-                        : 'bg-white border border-boho-dark/5 text-boho-dark rounded-2xl rounded-bl-sm'
+                      msg.sender === "user"
+                        ? "bg-boho-sage text-boho-dark rounded-2xl rounded-br-sm"
+                        : "bg-boho-beige border border-boho-dark/10 text-boho-dark rounded-2xl rounded-bl-sm"
                     }`}
                   >
                     {msg.text}
                   </div>
                 </div>
               ))}
-              
+
               {isTyping && (
                 <div className="flex items-end gap-2">
-                  <img src={AniAvatar} alt="Ani" className="w-6 h-6 rounded-full object-cover flex-shrink-0" />
-                  <div className="bg-white border border-boho-dark/5 rounded-2xl rounded-bl-sm px-4 py-3 shadow-sm flex gap-1 items-center h-10">
+                  <img
+                    src={AniAvatar}
+                    alt="Ani"
+                    className="w-6 h-6 rounded-full object-cover flex-shrink-0"
+                  />
+                  <div className="bg-boho-beige border border-boho-dark/10 rounded-2xl rounded-bl-sm px-4 py-3 shadow-sm flex gap-1 items-center h-10">
                     <motion.div
                       className="w-1.5 h-1.5 bg-boho-dark/40 rounded-full"
                       animate={{ y: [0, -4, 0] }}
@@ -163,12 +185,20 @@ export default function ChatbotWidget() {
                     <motion.div
                       className="w-1.5 h-1.5 bg-boho-dark/40 rounded-full"
                       animate={{ y: [0, -4, 0] }}
-                      transition={{ duration: 0.6, repeat: Infinity, delay: 0.2 }}
+                      transition={{
+                        duration: 0.6,
+                        repeat: Infinity,
+                        delay: 0.2,
+                      }}
                     />
                     <motion.div
                       className="w-1.5 h-1.5 bg-boho-dark/40 rounded-full"
                       animate={{ y: [0, -4, 0] }}
-                      transition={{ duration: 0.6, repeat: Infinity, delay: 0.4 }}
+                      transition={{
+                        duration: 0.6,
+                        repeat: Infinity,
+                        delay: 0.4,
+                      }}
                     />
                   </div>
                 </div>
@@ -177,7 +207,7 @@ export default function ChatbotWidget() {
             </div>
 
             {/* Input Area */}
-            <div className="p-4 bg-white border-t border-boho-dark/5">
+            <div className="p-4 bg-boho-beige border-t border-boho-dark/10">
               <form
                 onSubmit={handleSendMessage}
                 className="flex items-center gap-2 bg-boho-cream rounded-full px-4 py-2 border border-boho-dark/10 focus-within:border-boho-sage transition-colors"
@@ -230,8 +260,10 @@ export default function ChatbotWidget() {
                   >
                     <X className="w-3 h-3" />
                   </button>
-                  <p className="text-sm text-boho-dark font-light pr-4 text-center mt-1">Hast du eine Frage? ✨</p>
-                  
+                  <p className="text-sm text-boho-dark font-light pr-4 text-center mt-1">
+                    Hast du eine Frage? ✨
+                  </p>
+
                   {/* Triangle Arrow pointing down */}
                   <div className="absolute -bottom-2 right-6 w-4 h-4 bg-boho-cream border-b border-r border-boho-dark/10 transform rotate-45"></div>
                 </motion.div>
@@ -251,8 +283,12 @@ export default function ChatbotWidget() {
               className="w-16 h-16 rounded-full shadow-xl flex items-center justify-center transition-transform duration-300 relative group bg-transparent"
               aria-label="Chat öffnen"
             >
-              <img src={AniAvatar} alt="Ani" className="w-full h-full object-cover rounded-full" />
-              
+              <img
+                src={AniAvatar}
+                alt="Ani"
+                className="w-full h-full object-cover rounded-full"
+              />
+
               {/* Notification Badge */}
               <div className="absolute top-0 right-0 w-4 h-4 bg-boho-sage border-2 border-boho-cream rounded-full"></div>
             </motion.button>
